@@ -73,16 +73,17 @@ namespace SmartTags
     }
 
     //this command deletes tags associated with the selected objects
-    public class deleteTagsCommand : Command
+    [System.Runtime.InteropServices.Guid("63083f7b-f7b0-4479-9a64-a4403d66e25c")]
+    public class DeleteTagsCommand : Command
     {
-        public deleteTagsCommand()
+        public DeleteTagsCommand()
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
             Instance = this;
         }
         ///<summary>The only instance of this command.</summary>
-        public static deleteTagsCommand Instance
+        public static DeleteTagsCommand Instance
         {
             get; private set;
         }
@@ -133,16 +134,17 @@ namespace SmartTags
 
     //this commands accepts a tag filter from user as a string and selects the elements
     //that pass the filter.
-    public class tagFilterCommand : Command
+    [System.Runtime.InteropServices.Guid("a5531951-5e9a-4797-bc20-63511752227e")]
+    public class TagFilterCommand : Command
     {
-        public tagFilterCommand()
+        public TagFilterCommand()
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
             Instance = this;
         }
         ///<summary>The only instance of this command.</summary>
-        public static tagFilterCommand Instance
+        public static TagFilterCommand Instance
         {
             get; private set;
         }
@@ -177,16 +179,17 @@ namespace SmartTags
     }
 
     //this displays a dialog showing all the tags associated with the selected objects
-    public class showTagsCommand : Command
+    [System.Runtime.InteropServices.Guid("43f54dba-dd24-459a-924d-fe369ee30bdb")]
+    public class ShowTagsCommand : Command
     {
-        public showTagsCommand()
+        public ShowTagsCommand()
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
             Instance = this;
         }
         ///<summary>The only instance of this command.</summary>
-        public static showTagsCommand Instance
+        public static ShowTagsCommand Instance
         {
             get; private set;
         }
@@ -216,7 +219,7 @@ namespace SmartTags
             List<string> tags = new List<string>();
             foreach (RhinoObject obj in objs)
             {
-                tags = tags.Union(SmartTag.getTags(obj)).ToList();
+                tags = tags.Union(SmartTag.GetTags(obj)).ToList();
             }
 
             StringBuilder str = new StringBuilder();
