@@ -16,7 +16,7 @@
             Instance = this;
         }
 
-        ///<summary>Gets the only instance of the SmartTagsPlugIn plug-in.</summary>
+        ///<summary>Gets the only instance of the smartTagsPlugIn plug-in.</summary>
         public static SmartTagsPlugIn Instance
         {
             get; private set;
