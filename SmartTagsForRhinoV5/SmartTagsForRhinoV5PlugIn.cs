@@ -1,4 +1,4 @@
-﻿namespace SmartTags
+﻿namespace SmartTagsForRhino
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived
@@ -8,16 +8,16 @@
     /// attributes in AssemblyInfo.cs (you might need to click "Project" ->
     /// "Show All Files" to see it in the "Solution Explorer" window).</para>
     ///</summary>
-    public class SmartTagsPlugIn : Rhino.PlugIns.PlugIn
+    public class SmartTagsForRhinoV5PlugIn : Rhino.PlugIns.PlugIn
 
     {
-        public SmartTagsPlugIn()
+        public SmartTagsForRhinoV5PlugIn()
         {
             Instance = this;
         }
 
         ///<summary>Gets the only instance of the smartTagsPlugIn plug-in.</summary>
-        public static SmartTagsPlugIn Instance
+        public static SmartTagsForRhinoV5PlugIn Instance
         {
             get; private set;
         }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Rhino.DocObjects;
 
-namespace SmartTags
+namespace SmartTagsForRhino
 {
     public class Filter
     {
@@ -79,7 +79,7 @@ namespace SmartTags
             {
                 return new Filter((o) =>
                 {
-                    var tags = SmartTag.GetTags(o);
+                    var tags = TagUtil.GetTags(o);
                     return tags.Contains(terms[0]);
                 });
             }
@@ -120,7 +120,7 @@ namespace SmartTags
             }
             catch(IndexOutOfRangeException e)
             {
-                throw new SyntaxException(errMsg);
+                throw new SyntaxException(errMsg + ":\n" + e.Message);
             }
             return filter;
         }

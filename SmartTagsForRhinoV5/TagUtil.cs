@@ -7,7 +7,7 @@ using Rhino;
 using System.Diagnostics;
 using Rhino.DocObjects;
 
-namespace SmartTags
+namespace SmartTagsForRhino
 {
     //exception to throw when user's filter statement syntax is wrong
     public class SyntaxException : Exception
@@ -16,7 +16,7 @@ namespace SmartTags
     }
 
     //static class with tag related functions
-    public static class SmartTag
+    public static class TagUtil
     {
         public static string appKey = "smartTagData";
         //these words cannot be used
@@ -85,7 +85,7 @@ namespace SmartTags
             if (openBraces != closingBraces)
             {
                 string msg = "Please check the use of parenthesis in the filter statement";
-                Rhino.UI.Dialogs.ShowMessageBox(msg, "Warning");
+                ShowMessage(msg, "Warning");
                 return false;
             }
 
@@ -101,7 +101,7 @@ namespace SmartTags
             else
             {
                 string msg = string.Format("Cannot apply {0} operator on two sets", op.Name);
-                Rhino.UI.Dialogs.ShowMessageBox(msg, "Warning");
+                ShowMessage(msg, "Warning");
                 return new List<Guid>();
             }
         }
@@ -110,7 +110,7 @@ namespace SmartTags
         {
             if (!StatementIsValid(filterStatement))
             {
-                Rhino.UI.Dialogs.ShowMessageBox("The filter statement contains Illegal words or characters.", "Warning");
+                ShowMessage("The filter statement contains Illegal words or characters.", "Warning");
                 return null;
             }
             Filter filter = null;
@@ -120,7 +120,7 @@ namespace SmartTags
             }
             catch(SyntaxException e)
             {
-                Rhino.UI.Dialogs.ShowMessageBox(e.Message, "Operation Failed");
+                ShowMessage(e.Message, "Operation Failed");
             }
             return filter == null ? new List<Guid>() : Evaluate(filter, ref doc);
         }
@@ -137,5 +137,17 @@ namespace SmartTags
             }
             return ids;
         }
+
+#if RhinoV5
+        public static System.Windows.Forms.DialogResult ShowMessage(string message, string title)
+        {
+            return Rhino.UI.Dialogs.ShowMessageBox(message, title);
+        }
+#elif RhinoV6
+        public static Rhino.UI.ShowMessageResult ShowMessage(string message, string title)
+        {
+            return Rhino.UI.Dialogs.ShowMessage(message, title);
+        }
+#endif
     }
 }
