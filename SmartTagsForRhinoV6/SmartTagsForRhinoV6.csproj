@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RhinoCommon">
@@ -66,23 +67,52 @@
     <Compile Include="..\SmartTagsForRhinoV5\Commands\TagFilterCommand.cs">
       <Link>Commands\TagFilterCommand.cs</Link>
     </Compile>
-    <Compile Include="..\SmartTagsForRhinoV5\Filter.cs">
-      <Link>Filter.cs</Link>
+    <Compile Include="..\SmartTagsForRhinoV5\Core\Filter.cs">
+      <Link>Core\Filter.cs</Link>
     </Compile>
-    <Compile Include="..\SmartTagsForRhinoV5\Operator.cs">
-      <Link>Operator.cs</Link>
+    <Compile Include="..\SmartTagsForRhinoV5\Core\Operator.cs">
+      <Link>Core\Operator.cs</Link>
+    </Compile>
+    <Compile Include="..\SmartTagsForRhinoV5\Panel_TagManager.cs">
+      <Link>Panel_TagManager.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\SmartTagsForRhinoV5\Panel_TagManager.designer.cs">
+      <Link>Panel_TagManager.designer.cs</Link>
+      <DependentUpon>Panel_TagManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\SmartTagsForRhinoV5\SmartTagsForRhinoPlugIn.cs">
+      <Link>SmartTagsForRhinoPlugIn.cs</Link>
     </Compile>
     <Compile Include="..\SmartTagsForRhinoV5\TagUtil.cs">
       <Link>TagUtil.cs</Link>
     </Compile>
-    <Compile Include="SmartTagsForRhinoV6PlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\SmartTagsForRhinoV5\Panel_TagManager.resx">
+      <Link>Panel_TagManager.resx</Link>
+      <DependentUpon>Panel_TagManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TagIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MyPlugIn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -104,5 +134,8 @@ Erase "$(TargetPath)"</PostBuildEvent>
     <StartArguments>
     </StartArguments>
     <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(SolutionDir)Resources\*.ico" "$(ProjectDir)Resources"</PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,19 +58,46 @@
       <HintPath>C:\Program Files\Rhinoceros 5 (64-bit)\System\rhinocommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filter.cs" />
-    <Compile Include="Operator.cs" />
+    <Compile Include="Core\Filter.cs" />
+    <Compile Include="Core\Operator.cs" />
     <Compile Include="Commands\DeleteTagsCommand.cs" />
     <Compile Include="Commands\TagFilterCommand.cs" />
+    <Compile Include="Panel_TagManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panel_TagManager.Designer.cs">
+      <DependentUpon>Panel_TagManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TagUtil.cs" />
     <Compile Include="Commands\TagCommand.cs" />
-    <Compile Include="SmartTagsForRhinoV5PlugIn.cs" />
+    <Compile Include="SmartTagsForRhinoPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Panel_TagManager.resx">
+      <DependentUpon>Panel_TagManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MyPlugIn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TagIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -99,5 +127,8 @@ Erase "$(TargetPath)"</PostBuildEvent>
     </StartArguments>
     <StartAction>Program</StartAction>
     <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(SolutionDir)Resources\*.ico" "$(ProjectDir)Resources"</PreBuildEvent>
   </PropertyGroup>
 </Project>

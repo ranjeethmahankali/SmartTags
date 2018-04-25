@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Rhino;
 using System.Diagnostics;
 using Rhino.DocObjects;
+using SmartTagsForRhino.Core;
 
 namespace SmartTagsForRhino
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Rhino.DocObjects;
 
-namespace SmartTagsForRhino
+namespace SmartTagsForRhino.Core
 {
     public class Filter
     {
