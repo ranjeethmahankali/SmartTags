@@ -8,9 +8,9 @@
     <ProjectGuid>{308304CA-F6A0-44FE-B1E9-A0C016B5ACA3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartTags</RootNamespace>
-    <AssemblyName>SmartTags</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>SmartTagsForRhinoV5</RootNamespace>
+    <AssemblyName>SmartTagsForRhinoV5</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
