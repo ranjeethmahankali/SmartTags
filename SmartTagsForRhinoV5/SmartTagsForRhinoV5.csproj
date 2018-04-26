@@ -8,7 +8,7 @@
     <ProjectGuid>{308304CA-F6A0-44FE-B1E9-A0C016B5ACA3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartTagsForRhinoV5</RootNamespace>
+    <RootNamespace>SmartTagsForRhino</RootNamespace>
     <AssemblyName>SmartTagsForRhinoV5</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\TagManagerCommand.cs" />
     <Compile Include="Core\Filter.cs" />
     <Compile Include="Core\Operator.cs" />
     <Compile Include="Commands\DeleteTagsCommand.cs" />

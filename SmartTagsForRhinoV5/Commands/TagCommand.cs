@@ -59,13 +59,9 @@ namespace SmartTagsForRhino.Commands
                     return getter.CommandResult();
                 }
                 tagName = getter.StringResult();
-                //Debug.WriteLine(tagName, "Tag");
             }
 
-            foreach (RhinoObject obj in objs)
-            {
-                TagUtil.AddTag(obj, tagName);
-            }
+            TagUtil.AddTag(objs, tagName, true);
 
             doc.Views.Redraw();
             return Result.Success;

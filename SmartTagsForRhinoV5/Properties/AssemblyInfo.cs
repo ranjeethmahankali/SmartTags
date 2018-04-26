@@ -11,7 +11,7 @@ using Rhino.PlugIns;
 [assembly: PlugInDescription(DescriptionType.Email, "-")]
 [assembly: PlugInDescription(DescriptionType.Phone, "-")]
 [assembly: PlugInDescription(DescriptionType.Fax, "-")]
-[assembly: PlugInDescription(DescriptionType.Organization, "-")]
+[assembly: PlugInDescription(DescriptionType.Organization, "Ranjeeth Mahankali")]
 [assembly: PlugInDescription(DescriptionType.UpdateUrl, "-")]
 [assembly: PlugInDescription(DescriptionType.WebSite, "-")]
 
@@ -19,11 +19,11 @@ using Rhino.PlugIns;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmartTags")] // Plug-In title is extracted from this
+[assembly: AssemblyTitle("SmartTagsForRhinoV5")] // Plug-In title is extracted from this
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SmartTags")]
+[assembly: AssemblyCompany("Ranjeeth Mahankali")]
+[assembly: AssemblyProduct("SmartTagsForRhinoV5")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

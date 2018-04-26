@@ -10,7 +10,7 @@ using Rhino.PlugIns;
 [assembly: PlugInDescription(DescriptionType.Email, "-")]
 [assembly: PlugInDescription(DescriptionType.Phone, "-")]
 [assembly: PlugInDescription(DescriptionType.Fax, "-")]
-[assembly: PlugInDescription(DescriptionType.Organization, "-")]
+[assembly: PlugInDescription(DescriptionType.Organization, "Ranjeeth Mahankali")]
 [assembly: PlugInDescription(DescriptionType.UpdateUrl, "-")]
 [assembly: PlugInDescription(DescriptionType.WebSite, "-")]
 
@@ -27,7 +27,7 @@ using Rhino.PlugIns;
 [assembly: AssemblyDescription("SmartTagsForRhinoV6 utility plug-in")]
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Ranjeeth Mahankali")]
 [assembly: AssemblyProduct("SmartTagsForRhinoV6")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

@@ -8,7 +8,7 @@
     <ProjectGuid>{D3050BF9-F2F9-42A3-BDC1-5D111989C37F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartTagsForRhinoV6</RootNamespace>
+    <RootNamespace>SmartTagsForRhino</RootNamespace>
     <AssemblyName>SmartTagsForRhinoV6</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -87,6 +87,7 @@
     <Compile Include="..\SmartTagsForRhinoV5\TagUtil.cs">
       <Link>TagUtil.cs</Link>
     </Compile>
+    <Compile Include="Commands\TagManagerCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

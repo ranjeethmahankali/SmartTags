@@ -26,6 +26,20 @@ namespace SmartTagsForRhino
         //this dictionary will contail all the tags
         //this dictionary will be used as a rough column while solving a filter statement
 
+        public static Panel_TagManager TagManager
+        {
+            get
+            {
+                return Rhino.UI.Panels.GetPanel(typeof(Panel_TagManager).GUID) as Panel_TagManager;
+            }
+        }
+
+        //update the tag manager panel UI with new tags
+        public static void UpdateUI(string tag)
+        {
+            TagManager?.UpdateTag(tag);
+        }
+
         //returns if a word is valid for use as a tag
         public static bool IsValid(string word)
         {
@@ -60,22 +74,37 @@ namespace SmartTagsForRhino
         }
 
         //adds new tags with objects, or new objects to old tags
-        public static void AddTag(RhinoObject obj, string tag)
+        public static void AddTag(RhinoObject obj, string tag, bool updateUI = false)
         {
             if (!IsValid(tag)) { return; }
             List<string> tags = GetTags(obj);
             if (tags.Contains(tag)) { return; }
             tags.Add(tag);
             SaveTags(obj, tags);
+
+            if (updateUI) { UpdateUI(tag); }
+        }
+        //adds new tags with objects, or new objects to old tags
+        public static void AddTag(List<RhinoObject> objs, string tag, bool updateUI = false)
+        {
+            foreach(var obj in objs) { AddTag(obj, tag); }
+            if (updateUI) { UpdateUI(tag); }
         }
         //deletes existing tags. returns true if all goes well or else returs false
-        public static bool DeleteTag(RhinoObject obj, string tag)
+        public static void DeleteTag(RhinoObject obj, string tag, bool updateUI = false)
         {
             List<string> tags = GetTags(obj);
-            if (!tags.Contains(tag)) { return false; }
+            if (!tags.Contains(tag)) { return; }
             tags.Remove(tag);
             SaveTags(obj, tags);
-            return true;
+
+            if (updateUI) { UpdateUI(tag); }
+        }
+        //deletes existing tags. returns true if all goes well or else returs false
+        public static void DeleteTag(List<RhinoObject> objs, string tag, bool updateUI = false)
+        {
+            foreach(var obj in objs) { DeleteTag(obj, tag); }
+            if (updateUI) { UpdateUI(tag); }
         }
 
         //this checks if a statement or a substatement is valid

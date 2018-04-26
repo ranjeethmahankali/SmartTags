@@ -1,6 +1,15 @@
-﻿namespace SmartTagsForRhino
+﻿using System;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace SmartTagsForRhino
 {
-    partial class Panel_TagManager
+    public enum TagButtonState { ACTIVE, INACTIVE }
+
+    public partial class Panel_TagManager
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,47 +37,103 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.pnlTagContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
-            this.lblPanelTitle = new System.Windows.Forms.Label();
-            this.pnlTitleBar.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pnlTagContainer
+            // 
+            this.pnlTagContainer.Location = new System.Drawing.Point(0, 34);
+            this.pnlTagContainer.Name = "pnlTagContainer";
+            this.pnlTagContainer.Size = new System.Drawing.Size(326, 584);
+            this.pnlTagContainer.TabIndex = 2;
             // 
             // pnlTitleBar
             // 
             this.pnlTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pnlTitleBar.Controls.Add(this.lblPanelTitle);
             this.pnlTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitleBar.Location = new System.Drawing.Point(0, 0);
             this.pnlTitleBar.Name = "pnlTitleBar";
             this.pnlTitleBar.Size = new System.Drawing.Size(326, 28);
             this.pnlTitleBar.TabIndex = 0;
             // 
-            // lblPanelTitle
-            // 
-            this.lblPanelTitle.AutoSize = true;
-            this.lblPanelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPanelTitle.Location = new System.Drawing.Point(4, 4);
-            this.lblPanelTitle.Name = "lblPanelTitle";
-            this.lblPanelTitle.Size = new System.Drawing.Size(95, 18);
-            this.lblPanelTitle.TabIndex = 0;
-            this.lblPanelTitle.Text = "Tag Manager";
-            // 
             // Panel_TagManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pnlTagContainer);
             this.Controls.Add(this.pnlTitleBar);
             this.Name = "Panel_TagManager";
             this.Size = new System.Drawing.Size(326, 618);
-            this.pnlTitleBar.ResumeLayout(false);
-            this.pnlTitleBar.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+        private FlowLayoutPanel pnlTagContainer;
 
-        private System.Windows.Forms.Panel pnlTitleBar;
-        private System.Windows.Forms.Label lblPanelTitle;
+        #region properties
+        #endregion
+
+        #region methods
+        private void AddNewTagButton(string tagName, TagButtonState state)
+        {
+            Button btn = new Button();
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
+            btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn.Margin = new System.Windows.Forms.Padding(2);
+            btn.Name = "tag_" + tagName;
+            btn.AutoSize = true;
+
+            btn.TabIndex = _tagDict.Count + 1;
+            btn.Text = tagName;
+            btn.UseVisualStyleBackColor = false;
+
+            StyleButton(ref btn, state);
+
+            this.pnlTagContainer.Controls.Add(btn);
+        }
+
+        private void AddNewTagButton(TagButton tagBtn)
+        {
+            AddNewTagButton(tagBtn.TagName, tagBtn.State);
+        }
+
+        private void UpdateUI()
+        {
+            //clear everything and repopulate the UI
+            this.pnlTagContainer.Controls.Clear();
+            var tags = _tagDict.Keys.ToList();
+            tags.Sort();
+            foreach(var key in tags)
+            {
+                AddNewTagButton(_tagDict[key]);
+            }
+        }
+
+        private void StyleButton(ref Button btn, TagButtonState state)
+        {
+            if (state == TagButtonState.ACTIVE)
+            {
+                btn.BackColor = Color.Blue;
+                btn.ForeColor = Color.White;
+            }
+            else
+            {
+                btn.BackColor = System.Drawing.SystemColors.ScrollBar;
+                btn.ForeColor = Color.Black;
+            }
+        }
+
+        private Button GetUIButton(int index)
+        {
+            if (index >= this.pnlTagContainer.Controls.Count || !(this.pnlTagContainer.Controls[index] is Button)) { return null; }
+            return this.pnlTagContainer.Controls[index] as Button;
+        }
+        #endregion
+
+        private Panel pnlTitleBar;
     }
 }

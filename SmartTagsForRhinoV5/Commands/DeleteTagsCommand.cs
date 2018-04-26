@@ -63,12 +63,8 @@ namespace SmartTagsForRhino.Commands
                 //Debug.WriteLine(tagName, "Tag");
             }
 
-            bool success = true;
-            foreach (RhinoObject obj in objs)
-            {
-                success = success && TagUtil.DeleteTag(obj, tagName);
-            }
-            return success ? Result.Success : Result.Nothing;
+            TagUtil.DeleteTag(objs, tagName, true);
+            return Result.Success;
         }
     }
 }

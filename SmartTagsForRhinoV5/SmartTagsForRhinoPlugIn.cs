@@ -36,12 +36,8 @@
             // by running the MyOpenPanel command and hidden by running the MyClosePanel command.
             // You can also include the custom panel in any existing panel group by simply right
             // clicking one a panel tab and checking or un-checking the "MyPane" option.
-#if RhinoV5
-            System.Drawing.Icon icon = SmartTagsForRhinoV5.Properties.Resources.MyPlugIn;
-#elif RhinoV6
-            System.Drawing.Icon icon = SmartTagsForRhinoV6.Properties.Resources.MyPlugIn;
-#endif
-            Rhino.UI.Panels.RegisterPanel(this, panelType, "MyPanel", icon);
+            System.Drawing.Icon icon = Properties.Resources.MyPlugIn;
+            Rhino.UI.Panels.RegisterPanel(this, panelType, "TagManager", icon);
             return Rhino.PlugIns.LoadReturnCode.Success;
         }
 
