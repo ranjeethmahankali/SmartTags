@@ -66,11 +66,11 @@ namespace SmartTagsForRhino
             this.Name = "Panel_TagManager";
             this.Size = new System.Drawing.Size(326, 618);
             this.ResumeLayout(false);
-
         }
 
-        #endregion
+        private Panel pnlTitleBar;
         private FlowLayoutPanel pnlTagContainer;
+        #endregion
 
         #region properties
         #endregion
@@ -80,12 +80,16 @@ namespace SmartTagsForRhino
         {
             Button btn = new Button();
             btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.BorderColor = Color.Blue;
             btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
             btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue;
             btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn.Margin = new System.Windows.Forms.Padding(2);
             btn.Name = "tag_" + tagName;
             btn.AutoSize = true;
+            btn.MaximumSize = new Size(100, 30);
+            btn.AutoEllipsis = true;
+            btn.MouseClick += Tag_Click_Toggle;
 
             btn.TabIndex = _tagDict.Count + 1;
             btn.Text = tagName;
@@ -96,12 +100,23 @@ namespace SmartTagsForRhino
             this.pnlTagContainer.Controls.Add(btn);
         }
 
+        private void Tag_Click_Toggle(object sender, MouseEventArgs e)
+        {
+            var clickedBtn = (Button)sender;
+            var tagBtn = GetTagButton(clickedBtn.Text, false);
+            if(tagBtn == null) { return; }
+            tagBtn.FlipState();
+            UpdateTag(tagBtn);
+            UpdateObjectSelection();
+            UpdateUIButton(ref clickedBtn, tagBtn);
+        }
+
         private void AddNewTagButton(TagButton tagBtn)
         {
             AddNewTagButton(tagBtn.TagName, tagBtn.State);
         }
 
-        private void UpdateUI()
+        private void ResetUI()
         {
             //clear everything and repopulate the UI
             this.pnlTagContainer.Controls.Clear();
@@ -111,6 +126,25 @@ namespace SmartTagsForRhino
             {
                 AddNewTagButton(_tagDict[key]);
             }
+        }
+
+        private void UpdateUI()
+        {
+            foreach(var control in this.pnlTagContainer.Controls)
+            {
+                if(!(control is Button)) { continue; }
+                var btn = (Button)control;
+                TagButton tagBtn;
+                if(!_tagDict.TryGetValue(btn.Text, out tagBtn)) { continue; }
+                UpdateUIButton(ref btn, tagBtn);
+            }
+        }
+
+        private void UpdateUIButton(ref Button btn, TagButton tagBtn)
+        {
+            btn.Text = tagBtn.TagName;
+            StyleButton(ref btn, tagBtn.State);
+            btn.FlatAppearance.BorderSize = tagBtn.IsObjectSelected ? 2 : 0;
         }
 
         private void StyleButton(ref Button btn, TagButtonState state)
@@ -133,7 +167,5 @@ namespace SmartTagsForRhino
             return this.pnlTagContainer.Controls[index] as Button;
         }
         #endregion
-
-        private Panel pnlTitleBar;
     }
 }

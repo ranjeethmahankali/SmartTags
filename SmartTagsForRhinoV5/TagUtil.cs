@@ -35,9 +35,9 @@ namespace SmartTagsForRhino
         }
 
         //update the tag manager panel UI with new tags
-        public static void UpdateUI(string tag)
+        public static void UpdateUI(string tag, TagButtonState state = TagButtonState.INACTIVE, bool updateUI = true)
         {
-            TagManager?.UpdateTag(tag);
+            TagManager?.UpdateTag(tag, state , updateUI);
         }
 
         //returns if a word is valid for use as a tag
@@ -64,6 +64,18 @@ namespace SmartTagsForRhino
             }
 
             return JsonConvert.DeserializeObject<List<string>>(jsonStr);
+        }
+
+        //gets the list of tags associated with the given objects (union of all tags of all objects)
+        public static List<string> GetTagsUnion(IEnumerable<RhinoObject> objs)
+        {
+            IEnumerable<string> tags = new List<string>();
+            foreach(var obj in objs)
+            {
+                tags = tags.Union(GetTags(obj));
+            }
+
+            return tags.ToList();
         }
 
         //saves the list of tags in the object attributes as a jsonString
@@ -166,6 +178,19 @@ namespace SmartTagsForRhino
                 if (filter.TestObject(obj)) { ids.Add(obj.Id); }
             }
             return ids;
+        }
+
+        public static List<string> GetAllTags(RhinoDoc doc)
+        {
+            IEnumerable<string> tags = new List<string>();
+            IEnumerator<RhinoObject> objList = doc.Objects.GetEnumerator();
+            while (objList.MoveNext())
+            {
+                RhinoObject obj = objList.Current;
+                tags = tags.Union(GetTags(obj));
+            }
+
+            return tags.ToList();
         }
 
 #if RhinoV5

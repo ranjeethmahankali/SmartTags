@@ -53,6 +53,7 @@ namespace SmartTagsForRhino.Commands
 
             doc.Objects.UnselectAll();
             doc.Objects.Select(filtered);
+            doc.Views.Redraw();
 
             return Result.Success;
         }

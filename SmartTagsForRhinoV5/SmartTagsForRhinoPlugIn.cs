@@ -1,4 +1,15 @@
-﻿namespace SmartTagsForRhino
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using SmartTagsForRhino.Core;
+
+namespace SmartTagsForRhino
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived
@@ -38,7 +49,49 @@
             // clicking one a panel tab and checking or un-checking the "MyPane" option.
             System.Drawing.Icon icon = Properties.Resources.MyPlugIn;
             Rhino.UI.Panels.RegisterPanel(this, panelType, "TagManager", icon);
+
+            Rhino.RhinoDoc.SelectObjects += UpdateTagsForSelectEvent;
+            Rhino.RhinoDoc.DeselectAllObjects += RhinoDoc_DeselectAllObjects;
+            Rhino.RhinoDoc.DeselectObjects += UpdateTagsForDeselectEvent;
+
+            Rhino.RhinoDoc.EndOpenDocument += RhinoDoc_EndOpenDocument;
+
             return Rhino.PlugIns.LoadReturnCode.Success;
+        }
+
+        private void RhinoDoc_EndOpenDocument(object sender, Rhino.DocumentOpenEventArgs e)
+        {
+            //TODO: incomplete
+            throw new NotImplementedException();
+        }
+
+        protected override void OnShutdown()
+        {
+            Rhino.RhinoDoc.SelectObjects -= UpdateTagsForSelectEvent;
+            Rhino.RhinoDoc.DeselectAllObjects -= RhinoDoc_DeselectAllObjects;
+            Rhino.RhinoDoc.DeselectObjects -= UpdateTagsForDeselectEvent;
+            base.OnShutdown();
+        }
+
+        private void RhinoDoc_DeselectAllObjects(object sender, Rhino.DocObjects.RhinoDeselectAllObjectsEventArgs e)
+        {
+            TagUtil.TagManager?.UpdateAllObjectsDeselected(true);
+        }
+
+        private void UpdateTagsForDeselectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
+        {
+            //update the tag manager UI to reflect the selection
+            if (e.Selected) { return; }
+            List<string> tags = TagUtil.GetTagsUnion(e.RhinoObjects);
+            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
+        }
+
+        private void UpdateTagsForSelectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
+        {
+            //update the tag manager UI to reflect the selection
+            if (!e.Selected) { return; }
+            List<string> tags = TagUtil.GetTagsUnion(e.RhinoObjects);
+            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
         }
 
         // You can override methods here to change the plug-in behavior on
