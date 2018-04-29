@@ -43,9 +43,10 @@ namespace SmartTagsForRhino
             // 
             // pnlTagContainer
             // 
-            this.pnlTagContainer.Location = new System.Drawing.Point(0, 34);
+            this.pnlTagContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlTagContainer.Location = new System.Drawing.Point(0, 24);
             this.pnlTagContainer.Name = "pnlTagContainer";
-            this.pnlTagContainer.Size = new System.Drawing.Size(326, 584);
+            this.pnlTagContainer.Size = new System.Drawing.Size(326, 594);
             this.pnlTagContainer.TabIndex = 2;
             // 
             // pnlTitleBar
@@ -66,6 +67,7 @@ namespace SmartTagsForRhino
             this.Name = "Panel_TagManager";
             this.Size = new System.Drawing.Size(326, 618);
             this.ResumeLayout(false);
+
         }
 
         private Panel pnlTitleBar;
