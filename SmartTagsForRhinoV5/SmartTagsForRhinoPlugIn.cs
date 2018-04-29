@@ -61,8 +61,7 @@ namespace SmartTagsForRhino
 
         private void RhinoDoc_EndOpenDocument(object sender, Rhino.DocumentOpenEventArgs e)
         {
-            //TODO: incomplete
-            throw new NotImplementedException();
+            TagUtil.SetCurrentDocumentTags(TagUtil.GetAllTags(e.Document), e.Merge);
         }
 
         protected override void OnShutdown()
@@ -83,7 +82,8 @@ namespace SmartTagsForRhino
             //update the tag manager UI to reflect the selection
             if (e.Selected) { return; }
             List<string> tags = TagUtil.GetTagsUnion(e.RhinoObjects);
-            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
+            List<string> curSelectionTags = TagUtil.GetTagsUnion(e.Document.Objects.GetSelectedObjects(true, true));
+            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, curSelectionTags, true);
         }
 
         private void UpdateTagsForSelectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
@@ -91,7 +91,8 @@ namespace SmartTagsForRhino
             //update the tag manager UI to reflect the selection
             if (!e.Selected) { return; }
             List<string> tags = TagUtil.GetTagsUnion(e.RhinoObjects);
-            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
+            List<string> curSelectionTags = TagUtil.GetTagsUnion(e.Document.Objects.GetSelectedObjects(true, true));
+            TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, curSelectionTags, true);
         }
 
         // You can override methods here to change the plug-in behavior on

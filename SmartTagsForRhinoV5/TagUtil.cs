@@ -23,8 +23,6 @@ namespace SmartTagsForRhino
         //these words cannot be used
         public static List<string> RESERVED = new List<string>(Operator.Names);
         public static List<char> BAD_CHARS = new List<char>(new char[] { ',', '.', ' '});
-        //this dictionary will contail all the tags
-        //this dictionary will be used as a rough column while solving a filter statement
 
         public static Panel_TagManager TagManager
         {
@@ -183,6 +181,7 @@ namespace SmartTagsForRhino
         public static List<string> GetAllTags(RhinoDoc doc)
         {
             IEnumerable<string> tags = new List<string>();
+            if(doc == null) { return tags.ToList(); }
             IEnumerator<RhinoObject> objList = doc.Objects.GetEnumerator();
             while (objList.MoveNext())
             {
@@ -192,6 +191,32 @@ namespace SmartTagsForRhino
 
             return tags.ToList();
         }
+
+        public static void SetCurrentDocumentTags(List<string> tags, bool merge = false)
+        {
+            if (!merge)
+            {
+                Panel_TagManager.TagDict = new Dictionary<string, TagButton>();
+            }
+            foreach(string tag in tags)
+            {
+                TagButton btn = new TagButton(tag, TagButtonState.INACTIVE);
+                if (Panel_TagManager.TagDict.ContainsKey(tag))
+                {
+                    Panel_TagManager.TagDict[tag] = btn;
+                }
+                else { Panel_TagManager.TagDict.Add(tag, btn); }
+            }
+            //updating the UI if the panel is loaded
+            TagManager?.ResetUI();
+        }
+
+        public static List<string> GetCurrentDocumentTags()
+        {
+            return Panel_TagManager.TagDict.Keys.Select((s) => (string)s.Clone()).ToList();
+        }
+
+        //public static List<string>
 
 #if RhinoV5
         public static System.Windows.Forms.DialogResult ShowMessage(string message, string title)

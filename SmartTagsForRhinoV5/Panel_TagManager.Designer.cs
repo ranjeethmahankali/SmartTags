@@ -91,7 +91,7 @@ namespace SmartTagsForRhino
             btn.AutoEllipsis = true;
             btn.MouseClick += Tag_Click_Toggle;
 
-            btn.TabIndex = _tagDict.Count + 1;
+            btn.TabIndex = TagDict.Count + 1;
             btn.Text = tagName;
             btn.UseVisualStyleBackColor = false;
 
@@ -116,15 +116,15 @@ namespace SmartTagsForRhino
             AddNewTagButton(tagBtn.TagName, tagBtn.State);
         }
 
-        private void ResetUI()
+        internal void ResetUI()
         {
             //clear everything and repopulate the UI
             this.pnlTagContainer.Controls.Clear();
-            var tags = _tagDict.Keys.ToList();
+            var tags = TagDict.Keys.ToList();
             tags.Sort();
             foreach(var key in tags)
             {
-                AddNewTagButton(_tagDict[key]);
+                AddNewTagButton(TagDict[key]);
             }
         }
 
@@ -135,7 +135,7 @@ namespace SmartTagsForRhino
                 if(!(control is Button)) { continue; }
                 var btn = (Button)control;
                 TagButton tagBtn;
-                if(!_tagDict.TryGetValue(btn.Text, out tagBtn)) { continue; }
+                if(!TagDict.TryGetValue(btn.Text, out tagBtn)) { continue; }
                 UpdateUIButton(ref btn, tagBtn);
             }
         }

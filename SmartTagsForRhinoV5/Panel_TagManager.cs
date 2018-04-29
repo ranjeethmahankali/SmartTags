@@ -16,7 +16,8 @@ namespace SmartTagsForRhino
     public partial class Panel_TagManager : UserControl
     {
         #region fields
-        private Dictionary<string, TagButton> _tagDict = new Dictionary<string, TagButton>();
+        internal static Dictionary<string, TagButton> TagDict = new Dictionary<string, TagButton>();
+        internal static bool UserDeselectFlag = true;
         #endregion
 
         #region constructors
@@ -42,11 +43,11 @@ namespace SmartTagsForRhino
         public TagButton GetTagButton(string name, bool createNew = true)
         {
             TagButton tag;
-            if(!_tagDict.TryGetValue(name, out tag))
+            if(!TagDict.TryGetValue(name, out tag))
             {
                 if (!createNew) { return null; }
                 tag = new TagButton(name);
-                _tagDict.Add(name, tag);
+                TagDict.Add(name, tag);
             }
             return tag;
         }
@@ -60,7 +61,7 @@ namespace SmartTagsForRhino
         {
             TagButton btn = GetTagButton(name);
             btn.State = state;
-            _tagDict[name] = btn;
+            TagDict[name] = btn;
             if (updateUI) { ResetUI(); }
         }
         public void UpdateTag(TagButton tagBtn, bool updateUI = false)
@@ -73,27 +74,39 @@ namespace SmartTagsForRhino
         public void UpdateObjectSelection()
         {
             Filter filter = null;
-            foreach(var key in _tagDict.Keys)
+            foreach(var key in TagDict.Keys)
             {
-                if(_tagDict[key].State == TagButtonState.ACTIVE)
+                if(TagDict[key].State == TagButtonState.ACTIVE)
                 {
                     if (filter == null) { filter = Filter.ParseFromStatement(key); }
                     else { filter = Filter.Combine(filter, Filter.ParseFromStatement(key), Operator.OR); }
                 }
             }
             var doc = Rhino.RhinoDoc.ActiveDoc;
+
+            /*
+             * When objects are unselected, UI update event is thrown, the user deselect flag needs to indicate if the user is responsible for the
+             * deselect event or if its the application.
+             */
+            UserDeselectFlag = false;
             doc.Objects.UnselectAll();
+            UserDeselectFlag = true;
+
             if (filter != null) { doc.Objects.Select(TagUtil.Evaluate(filter, ref doc)); }
             doc.Views.Redraw();
         }
 
-        public void UpdateSelectedObjectTags(List<string> tags, bool selection, bool updateUI = false)
+        public void UpdateSelectedObjectTags(List<string> tags, bool selection, List<string> currentlySelected, bool updateUI = false)
         {
             foreach(var tag in tags)
             {
                 TagButton tagBtn;
-                if(!_tagDict.TryGetValue(tag, out tagBtn)) { continue; }
-                tagBtn.IsObjectSelected = selection;
+                if(!TagDict.TryGetValue(tag, out tagBtn)) { continue; }
+                tagBtn.IsObjectSelected = selection || currentlySelected.Contains(tag);
+                if (!selection && UserDeselectFlag)
+                {
+                    tagBtn.State = TagButtonState.INACTIVE;
+                }
             }
 
             if (updateUI) { UpdateUI(); }
@@ -101,9 +114,13 @@ namespace SmartTagsForRhino
 
         public void UpdateAllObjectsDeselected(bool updateUI = false)
         {
-            foreach(var tag in _tagDict.Keys)
+            foreach(var tag in TagDict.Keys)
             {
-                _tagDict[tag].IsObjectSelected = false;
+                TagDict[tag].IsObjectSelected = false;
+                if (UserDeselectFlag)
+                {
+                    TagDict[tag].State = TagButtonState.INACTIVE;
+                }
             }
 
             if (updateUI) { UpdateUI(); }

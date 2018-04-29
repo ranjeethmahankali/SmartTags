@@ -37,6 +37,7 @@ namespace SmartTagsForRhino.Commands
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             var type = typeof(Panel_TagManager);
+            if (Rhino.UI.Panels.IsPanelVisible(type.GUID)) { return Result.Nothing; }
             Rhino.UI.Panels.OpenPanel(type.GUID);
             return Result.Success;
         }

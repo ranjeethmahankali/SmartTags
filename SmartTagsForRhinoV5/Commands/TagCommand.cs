@@ -39,6 +39,8 @@ namespace SmartTagsForRhino.Commands
             {
                 getter.EnablePreSelect(true, false);
                 getter.SetCommandPrompt("Select all the objects you want to tag");
+                getter.AcceptColor(false);
+                getter.AcceptString(false);
                 getter.GroupSelect = true;
                 getter.GetMultiple(1, 0);
                 if (getter.CommandResult() != Result.Success) { return getter.CommandResult(); }
