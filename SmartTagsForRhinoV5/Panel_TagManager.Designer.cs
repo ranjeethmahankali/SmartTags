@@ -48,9 +48,9 @@ namespace SmartTagsForRhino
             // 
             this.pnlTagContainer.AutoScroll = true;
             this.pnlTagContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTagContainer.Location = new System.Drawing.Point(0, 477);
+            this.pnlTagContainer.Location = new System.Drawing.Point(0, 0);
             this.pnlTagContainer.Name = "pnlTagContainer";
-            this.pnlTagContainer.Size = new System.Drawing.Size(326, 113);
+            this.pnlTagContainer.Size = new System.Drawing.Size(326, 459);
             this.pnlTagContainer.TabIndex = 2;
             // 
             // pnlTitleBar
@@ -64,10 +64,10 @@ namespace SmartTagsForRhino
             // 
             // pnlTagFilter
             // 
-            this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTagFilter.Location = new System.Drawing.Point(0, 0);
+            this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlTagFilter.Location = new System.Drawing.Point(0, 459);
             this.pnlTagFilter.Name = "pnlTagFilter";
-            this.pnlTagFilter.Size = new System.Drawing.Size(326, 477);
+            this.pnlTagFilter.Size = new System.Drawing.Size(326, 131);
             this.pnlTagFilter.TabIndex = 3;
             // 
             // pnlBody

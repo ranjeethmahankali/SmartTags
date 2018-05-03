@@ -76,6 +76,26 @@ namespace SmartTagsForRhino
             return tags.ToList();
         }
 
+        //returns the tags of the given objects in a guid map
+        public static Dictionary<string, List<Guid>> GetTagUidMap(IEnumerable<RhinoObject> objs)
+        {
+            Dictionary<string, List<Guid>> dict = new Dictionary<string, List<Guid>>();
+            foreach(var obj in objs)
+            {
+                List<string> tags = GetTags(obj);
+                foreach(var tag in tags)
+                {
+                    if (!dict.ContainsKey(tag))
+                    {
+                        dict.Add(tag, new List<Guid>() { obj.Id });
+                    }
+                    else { dict[tag].Add(obj.Id); }
+                }
+            }
+
+            return dict;
+        }
+
         //saves the list of tags in the object attributes as a jsonString
         public static void SaveTags(RhinoObject obj, List<string> tagList)
         {

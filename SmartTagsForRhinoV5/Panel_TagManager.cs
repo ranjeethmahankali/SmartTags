@@ -96,16 +96,23 @@ namespace SmartTagsForRhino
             doc.Views.Redraw();
         }
 
-        public void UpdateSelectedObjectTags(List<string> tags, bool selection, List<string> currentlySelected, bool updateUI = false)
+        public void UpdateSelectedObjectTags(Dictionary<string, List<Guid>> tagObjMap, bool selection, bool updateUI = false)
         {
-            foreach(var tag in tags)
+            foreach(var tag in tagObjMap.Keys)
             {
                 TagButton tagBtn;
                 if(!TagDict.TryGetValue(tag, out tagBtn)) { continue; }
-                tagBtn.IsObjectSelected = selection || currentlySelected.Contains(tag);
-                if (!selection && UserDeselectFlag)
+                if (selection)
                 {
-                    tagBtn.State = TagButtonState.INACTIVE;
+                    tagBtn.AddSelectedObjects(tagObjMap[tag]);
+                }
+                else
+                {
+                    tagBtn.RemoveSelectedObjects(tagObjMap[tag]);
+                    if (UserDeselectFlag)//if a deselection event check the flag
+                    {
+                        tagBtn.State = TagButtonState.INACTIVE;
+                    }
                 }
             }
 
@@ -116,7 +123,7 @@ namespace SmartTagsForRhino
         {
             foreach(var tag in TagDict.Keys)
             {
-                TagDict[tag].IsObjectSelected = false;
+                TagDict[tag].RemoveAllSelectedObjects();
                 if (UserDeselectFlag)
                 {
                     TagDict[tag].State = TagButtonState.INACTIVE;
@@ -133,13 +140,14 @@ namespace SmartTagsForRhino
         #region fields
         private string _tagName;
         private TagButtonState _state;
-        private bool _isObjectSelected = false;
+        List<Guid> _curSelectedObjects = new List<Guid>();
         #endregion
 
         #region properties
         public string TagName { get => _tagName; set => _tagName = value; }
         public TagButtonState State { get => _state; set => _state = value; }
-        public bool IsObjectSelected { get => _isObjectSelected; set => _isObjectSelected = value; }
+        public bool IsObjectSelected { get => _curSelectedObjects.Count > 0; }
+        //public List<Guid> CurrentSelectedObjects { get => _curSelectedObjects; }
         #endregion
 
         #region constructors
@@ -155,6 +163,21 @@ namespace SmartTagsForRhino
         public void FlipState()
         {
             _state = _state == TagButtonState.ACTIVE ? TagButtonState.INACTIVE : TagButtonState.ACTIVE;
+        }
+        public void AddSelectedObjects(IEnumerable<Guid> ids)
+        {
+            _curSelectedObjects = _curSelectedObjects.Union(ids).ToList();
+        }
+        public void RemoveSelectedObjects(IEnumerable<Guid> ids)
+        {
+            foreach(var id in ids)
+            {
+                _curSelectedObjects.Remove(id);
+            }
+        }
+        public void RemoveAllSelectedObjects()
+        {
+            _curSelectedObjects = new List<Guid>();
         }
         #endregion
     }
