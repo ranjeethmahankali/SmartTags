@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using SmartTagsForRhino.Core;
+
 namespace SmartTagsForRhino
 {
     public enum TagButtonState { ACTIVE, INACTIVE }
@@ -269,22 +271,38 @@ namespace SmartTagsForRhino
         //various context menu option event handlers
         private void Filter_OrNotThisOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null) { return; }
+            Filter notThisFilter = Filter.Invert(Filter.ParseFromStatement(tag));
+            CurrentFilter = CurrentFilter == null ? notThisFilter : Filter.Combine(CurrentFilter, notThisFilter, Operator.OR);
+            ApplyCurrentFilter();
         }
 
         private void Filter_AndNotThisOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null) { return; }
+            Filter notThisFilter = Filter.Invert(Filter.ParseFromStatement(tag));
+            CurrentFilter = CurrentFilter == null ? notThisFilter : Filter.Combine(CurrentFilter, notThisFilter, Operator.AND);
+            ApplyCurrentFilter();
         }
 
         private void Filter_OrThisOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null) { return; }
+            Filter thisFilter = Filter.ParseFromStatement(tag);
+            CurrentFilter = CurrentFilter == null ? thisFilter : Filter.Combine(CurrentFilter, thisFilter, Operator.OR);
+            ApplyCurrentFilter();
         }
 
         private void Filter_AndThisOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null) { return; }
+            Filter thisFilter = Filter.ParseFromStatement(tag);
+            CurrentFilter = CurrentFilter == null ? thisFilter : Filter.Combine(CurrentFilter, thisFilter, Operator.AND);
+            ApplyCurrentFilter();
         }
 
         private void DeleteTagFromDocOption_Click(object sender, EventArgs e)

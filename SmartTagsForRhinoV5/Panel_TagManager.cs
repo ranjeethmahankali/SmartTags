@@ -19,6 +19,7 @@ namespace SmartTagsForRhino
         internal static Dictionary<string, TagButton> TagDict = new Dictionary<string, TagButton>();
         internal static bool UserDeselectFlag = true;
         private static List<Guid> _selectedObjects = new List<Guid>();
+        public Filter CurrentFilter { get; set; }
         #endregion
 
         #region constructors
@@ -150,6 +151,15 @@ namespace SmartTagsForRhino
                 if (_selectedObjects.Contains(id)) { _selectedObjects.Remove(id); }
             }
         }
+
+        public void ApplyCurrentFilter()
+        {
+            if(CurrentFilter == null) { return; }
+            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagFilterCommand.CommandString, 
+                CurrentFilter.ToString()), false);
+
+            ResetUI();
+        }
         #endregion
     }
 
@@ -159,7 +169,6 @@ namespace SmartTagsForRhino
         private string _tagName;
         private TagButtonState _state;
         List<Guid> _curSelectedObjects = new List<Guid>();
-        public Filter CurrentFilter { get; set; }
         #endregion
 
         #region properties
