@@ -18,6 +18,7 @@ namespace SmartTagsForRhino
         #region fields
         internal static Dictionary<string, TagButton> TagDict = new Dictionary<string, TagButton>();
         internal static bool UserDeselectFlag = true;
+        private static List<Guid> _selectedObjects = new List<Guid>();
         #endregion
 
         #region constructors
@@ -130,7 +131,24 @@ namespace SmartTagsForRhino
                 }
             }
 
+            if (UserDeselectFlag) { _selectedObjects = new List<Guid>(); }
+
             if (updateUI) { UpdateUI(); }
+        }
+
+        public void AddToSelectedObjects(IEnumerable<Guid> ids)
+        {
+            foreach(var id in ids)
+            {
+                if (!_selectedObjects.Contains(id)) { _selectedObjects.Add(id); }
+            }
+        }
+        public void RemoveFromSelectedObjects(IEnumerable<Guid> ids)
+        {
+            foreach (var id in ids)
+            {
+                if (_selectedObjects.Contains(id)) { _selectedObjects.Remove(id); }
+            }
         }
         #endregion
     }

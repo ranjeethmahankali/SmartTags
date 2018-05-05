@@ -8,6 +8,7 @@ using System.Linq;
 namespace SmartTagsForRhino
 {
     public enum TagButtonState { ACTIVE, INACTIVE }
+    public enum TagClickState { NORMAL, ADDING, DELETING }
 
     public partial class Panel_TagManager
     {
@@ -15,6 +16,7 @@ namespace SmartTagsForRhino
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private ContextMenuStrip _contextMenu = null;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -90,18 +92,62 @@ namespace SmartTagsForRhino
             this.Size = new System.Drawing.Size(326, 618);
             this.pnlBody.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         private Panel pnlTitleBar;
         private FlowLayoutPanel pnlTagContainer;
+        private Panel pnlTagFilter;
+        private Panel pnlBody;
         #endregion
 
         #region properties
+        internal ContextMenuStrip TagContextMenu
+        {
+            get
+            {
+                if(_contextMenu == null)
+                {
+                    _contextMenu = new ContextMenuStrip();
+
+                    ToolStripMenuItem addTagToSelectedObjs = new ToolStripMenuItem("Add tag to selected object(s)");
+                    addTagToSelectedObjs.Click += AddTagToSelectedObjsOption_Click;
+                    _contextMenu.Items.Add(addTagToSelectedObjs);
+
+                    _contextMenu.Items.Add(new ToolStripSeparator());
+
+                    ToolStripMenuItem deleteTagFromObjs = new ToolStripMenuItem("Delete tag from selected object(s)");
+                    deleteTagFromObjs.Click += DeleteTagFromObjsOption_Click;
+                    _contextMenu.Items.Add(deleteTagFromObjs);
+
+                    ToolStripMenuItem deleteTagFromDoc = new ToolStripMenuItem("Delete tag from document");
+                    deleteTagFromDoc.Click += DeleteTagFromDocOption_Click;
+                    _contextMenu.Items.Add(deleteTagFromDoc);
+
+                    _contextMenu.Items.Add(new ToolStripSeparator());
+
+                    ToolStripMenuItem filter_AndThis = new ToolStripMenuItem("Filter: AND this");
+                    filter_AndThis.Click += Filter_AndThisOption_Click;
+                    _contextMenu.Items.Add(filter_AndThis);
+
+                    ToolStripMenuItem filter_OrThis = new ToolStripMenuItem("Filter: OR this");
+                    filter_OrThis.Click += Filter_OrThisOption_Click;
+                    _contextMenu.Items.Add(filter_OrThis);
+
+                    ToolStripMenuItem filter_AndNotThis = new ToolStripMenuItem("Filter: AND NOT this");
+                    filter_AndNotThis.Click += Filter_AndNotThisOption_Click;
+                    _contextMenu.Items.Add(filter_AndNotThis);
+
+                    ToolStripMenuItem filter_OrNotThis = new ToolStripMenuItem("Filter: OR NOT this");
+                    filter_OrNotThis.Click += Filter_OrNotThisOption_Click;
+                    _contextMenu.Items.Add(filter_OrNotThis);
+                }
+                return _contextMenu;
+            }
+        }
         #endregion
 
         #region methods
-        private void AddNewTagButton(string tagName, TagButtonState state)
+        private Button GetNewUITagButton(string tagName, TagButtonState state)
         {
             Button btn = new Button();
             btn.FlatAppearance.BorderSize = 0;
@@ -120,9 +166,11 @@ namespace SmartTagsForRhino
             btn.Text = tagName;
             btn.UseVisualStyleBackColor = false;
 
-            StyleButton(ref btn, state);
+            //btn.ContextMenu = new ContextMenu(new MenuItem[] { new MenuItem("One"), new MenuItem("Two"), new MenuItem("Three",
+            //    new MenuItem[] { new MenuItem("A"), new MenuItem("B"), new MenuItem("C") }) });
 
-            this.pnlTagContainer.Controls.Add(btn);
+            StyleButton(ref btn, state);
+            return btn;
         }
 
         private void Tag_Click_Toggle(object sender, MouseEventArgs e)
@@ -138,7 +186,33 @@ namespace SmartTagsForRhino
 
         private void AddNewTagButton(TagButton tagBtn)
         {
-            AddNewTagButton(tagBtn.TagName, tagBtn.State);
+            var btn = GetNewUITagButton(tagBtn.TagName, tagBtn.State);
+            btn.ContextMenuStrip = TagContextMenu;
+            btn.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
+            this.pnlTagContainer.Controls.Add(btn);
+        }
+
+        private void ContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ContextMenuStrip strip = sender as ContextMenuStrip;
+            if(strip == null) { return; }
+
+            foreach(var menuItem in strip.Items)
+            {
+                ToolStripMenuItem item = menuItem as ToolStripMenuItem;
+                if(item == null) { continue; }
+                if (item.Text.ToLower().Contains("selected"))
+                {
+                    item.Enabled = _selectedObjects != null && _selectedObjects.Count > 0;
+                    if (item.Text.ToLower().Contains("delete"))
+                    {
+                        TagButton tagBtn = GetTagButton(strip.SourceControl.Text, false);
+                        item.Enabled = item.Enabled && tagBtn.IsObjectSelected;
+                    }
+                }
+            }
+
+            e.Cancel = false;
         }
 
         internal void ResetUI()
@@ -191,9 +265,45 @@ namespace SmartTagsForRhino
             if (index >= this.pnlTagContainer.Controls.Count || !(this.pnlTagContainer.Controls[index] is Button)) { return null; }
             return this.pnlTagContainer.Controls[index] as Button;
         }
-        #endregion
 
-        private Panel pnlTagFilter;
-        private Panel pnlBody;
+        //various context menu option event handlers
+        private void Filter_OrNotThisOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Filter_AndNotThisOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Filter_OrThisOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Filter_AndThisOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DeleteTagFromDocOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DeleteTagFromObjsOption_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void AddTagToSelectedObjsOption_Click(object sender, EventArgs e)
+        {
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if(tag == null || _selectedObjects.Count == 0) { return; }
+
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

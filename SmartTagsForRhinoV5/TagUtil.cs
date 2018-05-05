@@ -103,7 +103,7 @@ namespace SmartTagsForRhino
             obj.Attributes.SetUserString(appKey, jsonStr);
         }
 
-        //adds new tags with objects, or new objects to old tags
+        //adds new tags to objects, or new objects to old tags
         public static void AddTag(RhinoObject obj, string tag, bool updateUI = false)
         {
             if (!IsValid(tag)) { return; }

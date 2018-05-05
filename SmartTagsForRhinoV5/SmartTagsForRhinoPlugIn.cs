@@ -83,6 +83,7 @@ namespace SmartTagsForRhino
             if (e.Selected) { return; }
             Dictionary<string, List<Guid>> tags = TagUtil.GetTagUidMap(e.RhinoObjects);
             TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
+            TagUtil.TagManager?.RemoveFromSelectedObjects(e.RhinoObjects.Select(obj => obj.Id));
         }
 
         private void UpdateTagsForSelectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
@@ -91,6 +92,7 @@ namespace SmartTagsForRhino
             if (!e.Selected) { return; }
             Dictionary<string, List<Guid>> tags = TagUtil.GetTagUidMap(e.RhinoObjects);
             TagUtil.TagManager?.UpdateSelectedObjectTags(tags, e.Selected, true);
+            TagUtil.TagManager?.AddToSelectedObjects(e.RhinoObjects.Select(obj => obj.Id));
         }
 
         // You can override methods here to change the plug-in behavior on
