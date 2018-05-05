@@ -10,6 +10,7 @@ namespace SmartTagsForRhino.Core
     public class Filter
     {
         #region-fields
+        private string _filterText = null;
         private Predicate<RhinoObject> _testObject;
         #endregion
 
@@ -26,7 +27,7 @@ namespace SmartTagsForRhino.Core
         #endregion
 
         #region-constructors
-        public Filter(Predicate<RhinoObject> test)
+        private Filter(Predicate<RhinoObject> test)
         {
             _testObject = test;
         }
@@ -34,7 +35,7 @@ namespace SmartTagsForRhino.Core
 
         #region-methods
         //this splits a statement into terms
-        public static List<string> SplitStatement(string statement)
+        private static List<string> SplitStatement(string statement)
         {
             statement = statement.Trim(' ');
             List<string> terms = new List<string>();
@@ -77,11 +78,13 @@ namespace SmartTagsForRhino.Core
             }
             if (terms.Count == 1)
             {
-                return new Filter((o) =>
+                Filter f = new Filter((o) =>
                 {
                     var tags = TagUtil.GetTags(o);
                     return tags.Contains(terms[0]);
                 });
+                f._filterText = terms[0];
+                return f;
             }
 
             Filter filter;
@@ -126,26 +129,39 @@ namespace SmartTagsForRhino.Core
         }
         public static Filter Invert(Filter filter)
         {
-            return new Filter((rhObj) =>{
+            Filter f = new Filter((rhObj) =>{
                 return !filter.TestObject.Invoke(rhObj);
             });
+            f._filterText = string.Format("(not {0})", filter._filterText);
+            return f;
         }
         public static Filter Combine(Filter f1, Filter f2, Operator op)
         {
+            Filter fResult;
             if(op == Operator.AND)
             {
-                return new Filter((rhObj) => {
+                fResult = new Filter((rhObj) => {
                     return f1.TestObject.Invoke(rhObj) && f2.TestObject.Invoke(rhObj);
                 });
             }
-            if (op == Operator.OR)
+            else if (op == Operator.OR)
             {
-                return new Filter((rhObj) => {
+                fResult = new Filter((rhObj) => {
                     return f1.TestObject.Invoke(rhObj) || f2.TestObject.Invoke(rhObj);
                 });
             }
+            else
+            {
+                throw new InvalidOperationException(string.Format("Cannot apply {0} operator for 2 filters.", op.ToString()));
+            }
 
-            throw new InvalidOperationException(string.Format("Cannot apply {0} operator for 2 filters.", op.ToString()));
+            fResult._filterText = string.Format("({0} {1} {2})", f1._filterText, op.Name, f2._filterText);
+            return fResult;
+        }
+
+        public override string ToString()
+        {
+            return _filterText ?? "";
         }
         #endregion
     }
