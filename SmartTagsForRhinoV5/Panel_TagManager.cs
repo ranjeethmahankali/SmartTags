@@ -118,6 +118,8 @@ namespace SmartTagsForRhino
                 }
             }
 
+            if (UserDeselectFlag) { CurrentFilter = null; }
+
             if (updateUI) { UpdateUI(); }
         }
 
@@ -132,7 +134,11 @@ namespace SmartTagsForRhino
                 }
             }
 
-            if (UserDeselectFlag) { _selectedObjects = new List<Guid>(); }
+            if (UserDeselectFlag)
+            {
+                _selectedObjects = new List<Guid>();
+                CurrentFilter = null;
+            }
 
             if (updateUI) { UpdateUI(); }
         }
@@ -155,10 +161,12 @@ namespace SmartTagsForRhino
         public void ApplyCurrentFilter()
         {
             if(CurrentFilter == null) { return; }
-            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagFilterCommand.CommandString, 
+            UserDeselectFlag = false;
+            Rhino.RhinoApp.RunScript(string.Format("{0} \"{1}\"", Commands.TagFilterCommand.CommandString, 
                 CurrentFilter.ToString()), false);
+            UserDeselectFlag = true;
 
-            ResetUI();
+            UpdateUI();
         }
         #endregion
     }

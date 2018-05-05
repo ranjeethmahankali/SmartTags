@@ -38,6 +38,7 @@ namespace SmartTagsForRhino.Core
         private static List<string> SplitStatement(string statement)
         {
             statement = statement.Trim(' ');
+            if (statement.Length == 0) { return new List<string>(); }
             List<string> terms = new List<string>();
             Stack<int> braces = new Stack<int>();
             int lastPos = 0;
@@ -132,7 +133,7 @@ namespace SmartTagsForRhino.Core
             Filter f = new Filter((rhObj) =>{
                 return !filter.TestObject.Invoke(rhObj);
             });
-            f._filterText = string.Format("(not {0})", filter._filterText);
+            f._filterText = string.Format("not {0}", filter._filterText);
             return f;
         }
         public static Filter Combine(Filter f1, Filter f2, Operator op)
@@ -155,7 +156,7 @@ namespace SmartTagsForRhino.Core
                 throw new InvalidOperationException(string.Format("Cannot apply {0} operator for 2 filters.", op.ToString()));
             }
 
-            fResult._filterText = string.Format("({0} {1} {2})", f1._filterText, op.Name, f2._filterText);
+            fResult._filterText = string.Format("({0}) {1} ({2})", f1._filterText, op.Name, f2._filterText);
             return fResult;
         }
 

@@ -54,7 +54,7 @@ namespace SmartTagsForRhino
             this.pnlTagContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTagContainer.Location = new System.Drawing.Point(0, 0);
             this.pnlTagContainer.Name = "pnlTagContainer";
-            this.pnlTagContainer.Size = new System.Drawing.Size(326, 459);
+            this.pnlTagContainer.Size = new System.Drawing.Size(326, 393);
             this.pnlTagContainer.TabIndex = 2;
             // 
             // pnlTitleBar
@@ -69,9 +69,9 @@ namespace SmartTagsForRhino
             // pnlTagFilter
             // 
             this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlTagFilter.Location = new System.Drawing.Point(0, 459);
+            this.pnlTagFilter.Location = new System.Drawing.Point(0, 393);
             this.pnlTagFilter.Name = "pnlTagFilter";
-            this.pnlTagFilter.Size = new System.Drawing.Size(326, 131);
+            this.pnlTagFilter.Size = new System.Drawing.Size(326, 197);
             this.pnlTagFilter.TabIndex = 3;
             // 
             // pnlBody
@@ -94,6 +94,7 @@ namespace SmartTagsForRhino
             this.Size = new System.Drawing.Size(326, 618);
             this.pnlBody.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private Panel pnlTitleBar;
@@ -219,7 +220,7 @@ namespace SmartTagsForRhino
 
         internal void ResetUI()
         {
-            //clear everything and repopulate the UI
+            //clear all the tag buttons and repopulate the UI
             this.pnlTagContainer.Controls.Clear();
             var tags = TagDict.Keys.ToList();
             tags.Sort();
