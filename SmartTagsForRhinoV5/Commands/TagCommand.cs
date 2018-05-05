@@ -16,6 +16,7 @@ namespace SmartTagsForRhino.Commands
     [System.Runtime.InteropServices.Guid("137386c0-bfda-4376-9223-f9452fc9dec4")]
     public class TagCommand : Command
     {
+        public static string CommandString = "Tag";
         public TagCommand()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -30,7 +31,7 @@ namespace SmartTagsForRhino.Commands
         ///<returns>The command name as it appears on the Rhino command line.</returns>
         public override string EnglishName
         {
-            get { return "Tag"; }
+            get { return CommandString; }
         }
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
@@ -65,6 +66,7 @@ namespace SmartTagsForRhino.Commands
 
             TagUtil.AddTag(objs, tagName, true);
 
+            doc.Objects.UnselectAll();
             doc.Views.Redraw();
             return Result.Success;
         }

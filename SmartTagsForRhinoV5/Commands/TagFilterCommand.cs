@@ -17,6 +17,7 @@ namespace SmartTagsForRhino.Commands
     [System.Runtime.InteropServices.Guid("a5531951-5e9a-4797-bc20-63511752227e")]
     public class TagFilterCommand : Command
     {
+        public static string CommandString = "TagFilter";
         public TagFilterCommand()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -31,19 +32,23 @@ namespace SmartTagsForRhino.Commands
         ///<returns>The command name as it appears on the Rhino command line.</returns>
         public override string EnglishName
         {
-            get { return "TagFilter"; }
+            get { return CommandString; }
         }
         //this is where the logic of the command is defined
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             string filterStr;
-            Rhino.UI.Dialogs.ShowEditBox(
-                "Tag Filter",
-                "Enter the boolean filter statement (use the keywords 'and', 'or'.)",
-                "",
-                false,
-                out filterStr
-                );
+            using (GetString getter = new GetString())
+            {
+                getter.AcceptString(true);
+                getter.SetCommandPrompt("Enter the boolean filter statement (in quotes)");
+                if (getter.Get() != GetResult.String)
+                {
+                    RhinoApp.WriteLine("Invalid Input for tag");
+                    return getter.CommandResult();
+                }
+                filterStr = getter.StringResult();
+            }
 
             Stopwatch watch = new Stopwatch();
             watch.Start();

@@ -289,12 +289,20 @@ namespace SmartTagsForRhino
 
         private void DeleteTagFromDocOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null) { return; }
+
+            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagFilterCommand.CommandString, tag), false);
+            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.DeleteTagsCommand.CommandString, tag), true);
+            ResetUI();
         }
 
         private void DeleteTagFromObjsOption_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
+            if (tag == null || _selectedObjects.Count == 0) { return; }
+
+            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.DeleteTagsCommand.CommandString, tag), true);
         }
 
         private void AddTagToSelectedObjsOption_Click(object sender, EventArgs e)
@@ -302,7 +310,7 @@ namespace SmartTagsForRhino
             string tag = ((sender as ToolStripMenuItem)?.Owner as ContextMenuStrip)?.SourceControl?.Text;
             if(tag == null || _selectedObjects.Count == 0) { return; }
 
-            throw new NotImplementedException();
+            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagCommand.CommandString, tag), true);
         }
         #endregion
     }

@@ -16,6 +16,7 @@ namespace SmartTagsForRhino.Commands
     [System.Runtime.InteropServices.Guid("63083f7b-f7b0-4479-9a64-a4403d66e25c")]
     public class DeleteTagsCommand : Command
     {
+        public static string CommandString = "DeleteTag";
         public DeleteTagsCommand()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -30,7 +31,7 @@ namespace SmartTagsForRhino.Commands
         ///<returns>The command name as it appears on the Rhino command line.</returns>
         public override string EnglishName
         {
-            get { return "DeleteTag"; }
+            get { return CommandString; }
         }
         //this is where the logic of the command is defined
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
@@ -63,6 +64,7 @@ namespace SmartTagsForRhino.Commands
                 //Debug.WriteLine(tagName, "Tag");
             }
 
+            doc.Objects.UnselectAll();
             TagUtil.DeleteTag(objs, tagName, true);
             return Result.Success;
         }

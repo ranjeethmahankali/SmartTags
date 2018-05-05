@@ -16,6 +16,7 @@ namespace SmartTagsForRhino.Commands
     [System.Runtime.InteropServices.Guid("980edb5d-dc34-4118-9f46-a35426110be8")]
     public class TagManagerCommand : Command
     {
+        public static string CommandString = "TagManager";
         public TagManagerCommand()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -31,7 +32,7 @@ namespace SmartTagsForRhino.Commands
 
         public override string EnglishName
         {
-            get { return "TagManager"; }
+            get { return CommandString; }
         }
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)

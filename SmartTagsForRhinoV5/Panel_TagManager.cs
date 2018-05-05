@@ -159,6 +159,7 @@ namespace SmartTagsForRhino
         private string _tagName;
         private TagButtonState _state;
         List<Guid> _curSelectedObjects = new List<Guid>();
+        public Filter CurrentFilter { get; set; }
         #endregion
 
         #region properties
