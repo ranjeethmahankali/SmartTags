@@ -102,6 +102,7 @@ namespace SmartTagsForRhino
             this.btnSaveCurFilter.TabIndex = 2;
             this.btnSaveCurFilter.Text = "Save Filter";
             this.btnSaveCurFilter.UseVisualStyleBackColor = true;
+            this.btnSaveCurFilter.Click += new System.EventHandler(this.btnSaveCurFilter_Click);
             // 
             // lblCurFilterText
             // 
@@ -395,6 +396,12 @@ namespace SmartTagsForRhino
             if(tag == null || _selectedObjects.Count == 0) { return; }
 
             Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagCommand.CommandString, tag), true);
+        }
+
+        private void btnSaveCurFilter_Click(object sender, EventArgs e)
+        {
+            //incomplete - figure out how to save the current filter to the list of filters in the document
+            throw new NotImplementedException();
         }
         #endregion
 
