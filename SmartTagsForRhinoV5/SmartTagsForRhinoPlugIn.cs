@@ -74,11 +74,13 @@ namespace SmartTagsForRhino
 
         private void RhinoDoc_DeselectAllObjects(object sender, Rhino.DocObjects.RhinoDeselectAllObjectsEventArgs e)
         {
+            TagUtil.ActiveDocument = e.Document;
             TagUtil.TagManager?.UpdateAllObjectsDeselected(true);
         }
 
         private void UpdateTagsForDeselectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
         {
+            TagUtil.ActiveDocument = e.Document;
             //update the tag manager UI to reflect the selection
             if (e.Selected) { return; }
             Dictionary<string, List<Guid>> tags = TagUtil.GetTagUidMap(e.RhinoObjects);
@@ -88,6 +90,7 @@ namespace SmartTagsForRhino
 
         private void UpdateTagsForSelectEvent(object sender, Rhino.DocObjects.RhinoObjectSelectionEventArgs e)
         {
+            TagUtil.ActiveDocument = e.Document;
             //update the tag manager UI to reflect the selection
             if (!e.Selected) { return; }
             Dictionary<string, List<Guid>> tags = TagUtil.GetTagUidMap(e.RhinoObjects);

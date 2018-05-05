@@ -84,18 +84,12 @@ namespace SmartTagsForRhino
                     else { filter = Filter.Combine(filter, Filter.ParseFromStatement(key), Operator.OR); }
                 }
             }
-            var doc = Rhino.RhinoDoc.ActiveDoc;
-
             /*
              * When objects are unselected, UI update event is thrown, the user deselect flag needs to indicate if the user is responsible for the
              * deselect event or if its the application.
              */
-            UserDeselectFlag = false;
-            doc.Objects.UnselectAll();
-            UserDeselectFlag = true;
-
-            if (filter != null) { doc.Objects.Select(TagUtil.Evaluate(filter, ref doc)); }
-            doc.Views.Redraw();
+            CurrentFilter = filter;
+            ApplyCurrentFilter();
         }
 
         public void UpdateSelectedObjectTags(Dictionary<string, List<Guid>> tagObjMap, bool selection, bool updateUI = false)

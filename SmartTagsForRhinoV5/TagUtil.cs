@@ -11,6 +11,7 @@ using SmartTagsForRhino.Core;
 namespace SmartTagsForRhino
 {
     //exception to throw when user's filter statement syntax is wrong
+    [Serializable]
     public class SyntaxException : Exception
     {
         public SyntaxException(string message) : base(message) { }
@@ -24,11 +25,17 @@ namespace SmartTagsForRhino
         public static List<string> RESERVED = new List<string>(Operator.Names);
         public static List<char> BAD_CHARS = new List<char>(new char[] { ',', '.', ' '});
 
+        public static RhinoDoc ActiveDocument { get; set; }
+
         public static Panel_TagManager TagManager
         {
             get
             {
+#if RhinoV5
                 return Rhino.UI.Panels.GetPanel(typeof(Panel_TagManager).GUID) as Panel_TagManager;
+#elif RhinoV6
+                return Rhino.UI.Panels.GetPanel<Panel_TagManager>(ActiveDocument) as Panel_TagManager;
+#endif
             }
         }
 
@@ -200,6 +207,7 @@ namespace SmartTagsForRhino
 
         public static List<string> GetAllTags(RhinoDoc doc)
         {
+            ActiveDocument = doc;
             IEnumerable<string> tags = new List<string>();
             if(doc == null) { return tags.ToList(); }
             IEnumerator<RhinoObject> objList = doc.Objects.GetEnumerator();
