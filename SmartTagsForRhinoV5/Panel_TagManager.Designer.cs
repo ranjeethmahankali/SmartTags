@@ -42,10 +42,16 @@ namespace SmartTagsForRhino
         private void InitializeComponent()
         {
             this.pnlTagContainer = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlTitleBar = new System.Windows.Forms.Panel();
-            this.pnlTagFilter = new System.Windows.Forms.Panel();
             this.pnlBody = new System.Windows.Forms.Panel();
+            this.pnlTagFilter = new System.Windows.Forms.Panel();
+            this.pnlCurFilter = new System.Windows.Forms.Panel();
+            this.btnSaveCurFilter = new System.Windows.Forms.Button();
+            this.lblCurFilterText = new System.Windows.Forms.Label();
+            this.lblCurrentFilter = new System.Windows.Forms.Label();
+            this.pnlTitleBar = new System.Windows.Forms.Panel();
             this.pnlBody.SuspendLayout();
+            this.pnlTagFilter.SuspendLayout();
+            this.pnlCurFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTagContainer
@@ -54,25 +60,8 @@ namespace SmartTagsForRhino
             this.pnlTagContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTagContainer.Location = new System.Drawing.Point(0, 0);
             this.pnlTagContainer.Name = "pnlTagContainer";
-            this.pnlTagContainer.Size = new System.Drawing.Size(326, 393);
+            this.pnlTagContainer.Size = new System.Drawing.Size(326, 377);
             this.pnlTagContainer.TabIndex = 2;
-            // 
-            // pnlTitleBar
-            // 
-            this.pnlTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pnlTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTitleBar.Location = new System.Drawing.Point(0, 0);
-            this.pnlTitleBar.Name = "pnlTitleBar";
-            this.pnlTitleBar.Size = new System.Drawing.Size(326, 28);
-            this.pnlTitleBar.TabIndex = 0;
-            // 
-            // pnlTagFilter
-            // 
-            this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlTagFilter.Location = new System.Drawing.Point(0, 393);
-            this.pnlTagFilter.Name = "pnlTagFilter";
-            this.pnlTagFilter.Size = new System.Drawing.Size(326, 197);
-            this.pnlTagFilter.TabIndex = 3;
             // 
             // pnlBody
             // 
@@ -84,6 +73,65 @@ namespace SmartTagsForRhino
             this.pnlBody.Size = new System.Drawing.Size(326, 590);
             this.pnlBody.TabIndex = 3;
             // 
+            // pnlTagFilter
+            // 
+            this.pnlTagFilter.Controls.Add(this.pnlCurFilter);
+            this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlTagFilter.Location = new System.Drawing.Point(0, 377);
+            this.pnlTagFilter.Name = "pnlTagFilter";
+            this.pnlTagFilter.Size = new System.Drawing.Size(326, 213);
+            this.pnlTagFilter.TabIndex = 3;
+            // 
+            // pnlCurFilter
+            // 
+            this.pnlCurFilter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlCurFilter.Controls.Add(this.btnSaveCurFilter);
+            this.pnlCurFilter.Controls.Add(this.lblCurFilterText);
+            this.pnlCurFilter.Controls.Add(this.lblCurrentFilter);
+            this.pnlCurFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlCurFilter.Location = new System.Drawing.Point(0, 0);
+            this.pnlCurFilter.Name = "pnlCurFilter";
+            this.pnlCurFilter.Size = new System.Drawing.Size(326, 85);
+            this.pnlCurFilter.TabIndex = 1;
+            // 
+            // btnSaveCurFilter
+            // 
+            this.btnSaveCurFilter.Location = new System.Drawing.Point(3, 21);
+            this.btnSaveCurFilter.Name = "btnSaveCurFilter";
+            this.btnSaveCurFilter.Size = new System.Drawing.Size(84, 23);
+            this.btnSaveCurFilter.TabIndex = 2;
+            this.btnSaveCurFilter.Text = "Save Filter";
+            this.btnSaveCurFilter.UseVisualStyleBackColor = true;
+            // 
+            // lblCurFilterText
+            // 
+            this.lblCurFilterText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCurFilterText.Location = new System.Drawing.Point(94, 0);
+            this.lblCurFilterText.MaximumSize = new System.Drawing.Size(326, 0);
+            this.lblCurFilterText.Name = "lblCurFilterText";
+            this.lblCurFilterText.Size = new System.Drawing.Size(228, 81);
+            this.lblCurFilterText.TabIndex = 1;
+            this.lblCurFilterText.Text = "None";
+            // 
+            // lblCurrentFilter
+            // 
+            this.lblCurrentFilter.AutoSize = true;
+            this.lblCurrentFilter.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCurrentFilter.Location = new System.Drawing.Point(0, 0);
+            this.lblCurrentFilter.Name = "lblCurrentFilter";
+            this.lblCurrentFilter.Size = new System.Drawing.Size(94, 17);
+            this.lblCurrentFilter.TabIndex = 0;
+            this.lblCurrentFilter.Text = "Current Filter:";
+            // 
+            // pnlTitleBar
+            // 
+            this.pnlTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitleBar.Name = "pnlTitleBar";
+            this.pnlTitleBar.Size = new System.Drawing.Size(326, 28);
+            this.pnlTitleBar.TabIndex = 0;
+            // 
             // Panel_TagManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -93,8 +141,18 @@ namespace SmartTagsForRhino
             this.Name = "Panel_TagManager";
             this.Size = new System.Drawing.Size(326, 618);
             this.pnlBody.ResumeLayout(false);
+            this.pnlTagFilter.ResumeLayout(false);
+            this.pnlCurFilter.ResumeLayout(false);
+            this.pnlCurFilter.PerformLayout();
             this.ResumeLayout(false);
 
+        }
+
+        private void PnlBody_Resize(object sender, EventArgs e)
+        {
+            Control body = (Control)sender;
+            this.pnlTagFilter.Width = body.Width;
+            this.pnlCurFilter.Width = body.Width;
         }
 
         private Panel pnlTitleBar;
@@ -228,6 +286,7 @@ namespace SmartTagsForRhino
             {
                 AddNewTagButton(TagDict[key]);
             }
+            UpdateCurrentFilterText();
         }
 
         private void UpdateUI()
@@ -240,6 +299,7 @@ namespace SmartTagsForRhino
                 if(!TagDict.TryGetValue(btn.Text, out tagBtn)) { continue; }
                 UpdateUIButton(ref btn, tagBtn);
             }
+            UpdateCurrentFilterText();
         }
 
         private void UpdateUIButton(ref Button btn, TagButton tagBtn)
@@ -247,6 +307,11 @@ namespace SmartTagsForRhino
             btn.Text = tagBtn.TagName;
             StyleButton(ref btn, tagBtn.State);
             btn.FlatAppearance.BorderSize = tagBtn.IsObjectSelected ? 2 : 0;
+        }
+
+        public void UpdateCurrentFilterText()
+        {
+            this.lblCurFilterText.Text = CurrentFilter == null ? "None" : CurrentFilter.ToString();
         }
 
         private void StyleButton(ref Button btn, TagButtonState state)
@@ -332,5 +397,10 @@ namespace SmartTagsForRhino
             Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagCommand.CommandString, tag), true);
         }
         #endregion
+
+        private Label lblCurrentFilter;
+        private Panel pnlCurFilter;
+        private Label lblCurFilterText;
+        private Button btnSaveCurFilter;
     }
 }
