@@ -61,7 +61,9 @@ namespace SmartTagsForRhino
 
         private void RhinoDoc_EndOpenDocument(object sender, Rhino.DocumentOpenEventArgs e)
         {
+            TagUtil.ActiveDocument = e.Document;
             TagUtil.SetCurrentDocumentTags(TagUtil.GetAllTags(e.Document), e.Merge);
+            TagUtil.LoadSavedFiltersFromDocument();
         }
 
         protected override void OnShutdown()

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\SaveCurrentFilterCommand.cs" />
     <Compile Include="Commands\TagManagerCommand.cs" />
     <Compile Include="Core\Filter.cs" />
     <Compile Include="Core\Operator.cs" />

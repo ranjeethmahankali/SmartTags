@@ -19,6 +19,11 @@ namespace SmartTagsForRhino
         /// </summary>
         private System.ComponentModel.IContainer components = null;
         private ContextMenuStrip _contextMenu = null;
+        private Label lblCurrentFilter;
+        private Panel pnlCurFilter;
+        private Label lblCurFilterText;
+        private Button btnSaveCurFilter;
+        private FlowLayoutPanel pnlSavedFilters;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -49,6 +54,7 @@ namespace SmartTagsForRhino
             this.lblCurFilterText = new System.Windows.Forms.Label();
             this.lblCurrentFilter = new System.Windows.Forms.Label();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
+            this.pnlSavedFilters = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlBody.SuspendLayout();
             this.pnlTagFilter.SuspendLayout();
             this.pnlCurFilter.SuspendLayout();
@@ -75,6 +81,7 @@ namespace SmartTagsForRhino
             // 
             // pnlTagFilter
             // 
+            this.pnlTagFilter.Controls.Add(this.pnlSavedFilters);
             this.pnlTagFilter.Controls.Add(this.pnlCurFilter);
             this.pnlTagFilter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlTagFilter.Location = new System.Drawing.Point(0, 377);
@@ -132,6 +139,14 @@ namespace SmartTagsForRhino
             this.pnlTitleBar.Name = "pnlTitleBar";
             this.pnlTitleBar.Size = new System.Drawing.Size(326, 28);
             this.pnlTitleBar.TabIndex = 0;
+            // 
+            // pnlSavedFilters
+            // 
+            this.pnlSavedFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSavedFilters.Location = new System.Drawing.Point(0, 85);
+            this.pnlSavedFilters.Name = "pnlSavedFilters";
+            this.pnlSavedFilters.Size = new System.Drawing.Size(326, 128);
+            this.pnlSavedFilters.TabIndex = 2;
             // 
             // Panel_TagManager
             // 
@@ -222,14 +237,10 @@ namespace SmartTagsForRhino
             btn.AutoSize = true;
             btn.MaximumSize = new Size(100, 30);
             btn.AutoEllipsis = true;
-            btn.MouseClick += Tag_Click_Toggle;
 
             btn.TabIndex = TagDict.Count + 1;
             btn.Text = tagName;
             btn.UseVisualStyleBackColor = false;
-
-            //btn.ContextMenu = new ContextMenu(new MenuItem[] { new MenuItem("One"), new MenuItem("Two"), new MenuItem("Three",
-            //    new MenuItem[] { new MenuItem("A"), new MenuItem("B"), new MenuItem("C") }) });
 
             StyleButton(ref btn, state);
             return btn;
@@ -249,6 +260,7 @@ namespace SmartTagsForRhino
         private void AddNewTagButton(TagButton tagBtn)
         {
             var btn = GetNewUITagButton(tagBtn.TagName, tagBtn.State);
+            btn.MouseClick += Tag_Click_Toggle;
             btn.ContextMenuStrip = TagContextMenu;
             btn.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
             this.pnlTagContainer.Controls.Add(btn);
@@ -288,6 +300,7 @@ namespace SmartTagsForRhino
                 AddNewTagButton(TagDict[key]);
             }
             UpdateCurrentFilterText();
+            UpdateSavedFilters();
         }
 
         private void UpdateUI()
@@ -300,6 +313,30 @@ namespace SmartTagsForRhino
                 if(!TagDict.TryGetValue(btn.Text, out tagBtn)) { continue; }
                 UpdateUIButton(ref btn, tagBtn);
             }
+            UpdateCurrentFilterText();
+            //UpdateSavedFilters();
+        }
+
+        public void UpdateSavedFilters()
+        {
+            this.pnlSavedFilters.Controls.Clear();
+            foreach(var filterName in SavedFilters.Keys)
+            {
+                var btn = GetNewUITagButton(filterName, TagButtonState.INACTIVE);
+                btn.Click += FilterSelect_Click;
+                this.pnlSavedFilters.Controls.Add(btn);
+            }
+        }
+
+        private void FilterSelect_Click(object sender, EventArgs e)
+        {
+            string filterText;
+            var filterBtn = sender as Button; 
+            if(filterBtn == null) { return; }
+            if(!SavedFilters.TryGetValue(filterBtn.Text, out filterText)) { return; }
+            //apply filter
+            CurrentFilter = Filter.ParseFromStatement(filterText);
+            ApplyCurrentFilter(false);
             UpdateCurrentFilterText();
         }
 
@@ -400,14 +437,8 @@ namespace SmartTagsForRhino
 
         private void btnSaveCurFilter_Click(object sender, EventArgs e)
         {
-            //incomplete - figure out how to save the current filter to the list of filters in the document
-            throw new NotImplementedException();
+            Rhino.RhinoApp.RunScript(Commands.SaveCurrentFilter.CommandString, true);
         }
         #endregion
-
-        private Label lblCurrentFilter;
-        private Panel pnlCurFilter;
-        private Label lblCurFilterText;
-        private Button btnSaveCurFilter;
     }
 }

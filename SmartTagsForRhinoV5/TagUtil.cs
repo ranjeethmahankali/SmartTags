@@ -20,7 +20,7 @@ namespace SmartTagsForRhino
     //static class with tag related functions
     public static class TagUtil
     {
-        public static string appKey = "smartTagData";
+        public static string AppKey = "smartTagData_791f4b8c-e0c3-4d3e-b4ba-098a937a8bd2";
         //these words cannot be used
         public static List<string> RESERVED = new List<string>(Operator.Names);
         public static List<char> BAD_CHARS = new List<char>(new char[] { ',', '.', ' '});
@@ -62,7 +62,7 @@ namespace SmartTagsForRhino
         //gets the list of tags associated with an object
         public static List<string> GetTags(RhinoObject obj)
         {
-            string jsonStr = obj.Attributes.GetUserString(appKey);
+            string jsonStr = obj.Attributes.GetUserString(AppKey);
             if (jsonStr == "" || jsonStr == null)
             {
                 return new List<string>();
@@ -107,7 +107,7 @@ namespace SmartTagsForRhino
         public static void SaveTags(RhinoObject obj, List<string> tagList)
         {
             string jsonStr = JsonConvert.SerializeObject(tagList);
-            obj.Attributes.SetUserString(appKey, jsonStr);
+            obj.Attributes.SetUserString(AppKey, jsonStr);
         }
 
         //adds new tags to objects, or new objects to old tags
@@ -244,7 +244,24 @@ namespace SmartTagsForRhino
             return Panel_TagManager.TagDict.Keys.Select((s) => (string)s.Clone()).ToList();
         }
 
-        //public static List<string>
+        public static void AddSavedFiltersToDocument(RhinoDoc doc = null)
+        {
+            string jsonStr = JsonConvert.SerializeObject(Panel_TagManager.SavedFilters);
+            (doc??ActiveDocument)?.Strings.SetString(AppKey, jsonStr);
+            TagManager?.UpdateSavedFilters();
+        }
+
+        public static void LoadSavedFiltersFromDocument(RhinoDoc doc = null)
+        {
+            string jsonStr = (doc ?? ActiveDocument)?.Strings.GetValue(AppKey);
+            if(jsonStr == null) { Panel_TagManager.SavedFilters = new Dictionary<string, string>(); }
+            else
+            {
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                if(dict != null) { Panel_TagManager.SavedFilters = dict; }
+            }
+            TagManager?.UpdateSavedFilters();
+        }
 
 #if RhinoV5
         public static System.Windows.Forms.DialogResult ShowMessage(string message, string title)

@@ -61,6 +61,9 @@
     <Compile Include="..\SmartTagsForRhinoV5\Commands\DeleteTagsCommand.cs">
       <Link>Commands\DeleteTagsCommand.cs</Link>
     </Compile>
+    <Compile Include="..\SmartTagsForRhinoV5\Commands\SaveCurrentFilterCommand.cs">
+      <Link>Commands\SaveCurrentFilterCommand.cs</Link>
+    </Compile>
     <Compile Include="..\SmartTagsForRhinoV5\Commands\TagCommand.cs">
       <Link>Commands\TagCommand.cs</Link>
     </Compile>

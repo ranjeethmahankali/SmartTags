@@ -19,7 +19,8 @@ namespace SmartTagsForRhino
         internal static Dictionary<string, TagButton> TagDict = new Dictionary<string, TagButton>();
         internal static bool UserDeselectFlag = true;
         private static List<Guid> _selectedObjects = new List<Guid>();
-        public Filter CurrentFilter { get; set; }
+        public static Filter CurrentFilter { get; set; }
+        public static Dictionary<string, string> SavedFilters = new Dictionary<string, string>();
         #endregion
 
         #region constructors
@@ -152,13 +153,13 @@ namespace SmartTagsForRhino
             }
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(bool notUserChoice = true)
         {
             if(CurrentFilter == null) { return; }
-            UserDeselectFlag = false;
+            if (notUserChoice) { UserDeselectFlag = false; }
             Rhino.RhinoApp.RunScript(string.Format("{0} \"{1}\"", Commands.TagFilterCommand.CommandString, 
                 CurrentFilter.ToString()), false);
-            UserDeselectFlag = true;
+            if (notUserChoice) { UserDeselectFlag = true; }
 
             UpdateUI();
         }
