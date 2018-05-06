@@ -96,10 +96,28 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MyPlugIn.ico" />
+    <None Include="Resources\PNG_AddTagIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TagIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_AndNotThisFilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_AndThisFilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_DeleteTagIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_OrNotThisFilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_OrThisFilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PNG_RemoveTagIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

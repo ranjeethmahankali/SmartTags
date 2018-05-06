@@ -47,7 +47,7 @@ namespace SmartTagsForRhino
             // by running the MyOpenPanel command and hidden by running the MyClosePanel command.
             // You can also include the custom panel in any existing panel group by simply right
             // clicking one a panel tab and checking or un-checking the "MyPane" option.
-            System.Drawing.Icon icon = Properties.Resources.MyPlugIn;
+            System.Drawing.Icon icon = Properties.Resources.TagIcon;
             Rhino.UI.Panels.RegisterPanel(this, panelType, "TagManager", icon);
 
             Rhino.RhinoDoc.SelectObjects += UpdateTagsForSelectEvent;

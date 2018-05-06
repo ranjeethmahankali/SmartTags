@@ -240,3 +240,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+#Illustrator and Photoshop files used for designing visuals
+*.ai
+*.psd

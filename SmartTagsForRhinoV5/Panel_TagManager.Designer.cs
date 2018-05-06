@@ -186,36 +186,36 @@ namespace SmartTagsForRhino
                 {
                     _contextMenu = new ContextMenuStrip();
 
-                    ToolStripMenuItem addTagToSelectedObjs = new ToolStripMenuItem("Add tag to selected object(s)");
-                    addTagToSelectedObjs.Click += AddTagToSelectedObjsOption_Click;
+                    ToolStripMenuItem addTagToSelectedObjs = new ToolStripMenuItem("Add tag to selected object(s)",
+                        Properties.Resources.PNG_AddTagIcon, AddTagToSelectedObjsOption_Click);
                     _contextMenu.Items.Add(addTagToSelectedObjs);
 
                     _contextMenu.Items.Add(new ToolStripSeparator());
 
-                    ToolStripMenuItem deleteTagFromObjs = new ToolStripMenuItem("Delete tag from selected object(s)");
-                    deleteTagFromObjs.Click += DeleteTagFromObjsOption_Click;
+                    ToolStripMenuItem deleteTagFromObjs = new ToolStripMenuItem("Delete tag from selected object(s)",
+                        Properties.Resources.PNG_RemoveTagIcon, DeleteTagFromObjsOption_Click);
                     _contextMenu.Items.Add(deleteTagFromObjs);
 
-                    ToolStripMenuItem deleteTagFromDoc = new ToolStripMenuItem("Delete tag from document");
-                    deleteTagFromDoc.Click += DeleteTagFromDocOption_Click;
+                    ToolStripMenuItem deleteTagFromDoc = new ToolStripMenuItem("Delete tag from document", 
+                        Properties.Resources.PNG_DeleteTagIcon, DeleteTagFromDocOption_Click);
                     _contextMenu.Items.Add(deleteTagFromDoc);
 
                     _contextMenu.Items.Add(new ToolStripSeparator());
 
-                    ToolStripMenuItem filter_AndThis = new ToolStripMenuItem("Filter: AND this");
-                    filter_AndThis.Click += Filter_AndThisOption_Click;
+                    ToolStripMenuItem filter_AndThis = new ToolStripMenuItem("Filter: AND this", 
+                        Properties.Resources.PNG_AndThisFilter, Filter_AndThisOption_Click);
                     _contextMenu.Items.Add(filter_AndThis);
 
-                    ToolStripMenuItem filter_OrThis = new ToolStripMenuItem("Filter: OR this");
-                    filter_OrThis.Click += Filter_OrThisOption_Click;
+                    ToolStripMenuItem filter_OrThis = new ToolStripMenuItem("Filter: OR this", 
+                        Properties.Resources.PNG_OrThisFilter, Filter_OrThisOption_Click);
                     _contextMenu.Items.Add(filter_OrThis);
 
-                    ToolStripMenuItem filter_AndNotThis = new ToolStripMenuItem("Filter: AND NOT this");
-                    filter_AndNotThis.Click += Filter_AndNotThisOption_Click;
+                    ToolStripMenuItem filter_AndNotThis = new ToolStripMenuItem("Filter: AND NOT this", 
+                        Properties.Resources.PNG_AndNotThisFilter, Filter_AndNotThisOption_Click);
                     _contextMenu.Items.Add(filter_AndNotThis);
 
-                    ToolStripMenuItem filter_OrNotThis = new ToolStripMenuItem("Filter: OR NOT this");
-                    filter_OrNotThis.Click += Filter_OrNotThisOption_Click;
+                    ToolStripMenuItem filter_OrNotThis = new ToolStripMenuItem("Filter: OR NOT this", 
+                        Properties.Resources.PNG_OrNotThisFilter, Filter_OrNotThisOption_Click);
                     _contextMenu.Items.Add(filter_OrNotThis);
                 }
                 return _contextMenu;

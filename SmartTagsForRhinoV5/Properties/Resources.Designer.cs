@@ -61,12 +61,72 @@ namespace SmartTagsForRhino.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Icon MyPlugIn {
+        internal static System.Drawing.Bitmap PNG_AddTagIcon {
             get {
-                object obj = ResourceManager.GetObject("MyPlugIn", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("PNG_AddTagIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_AndNotThisFilter {
+            get {
+                object obj = ResourceManager.GetObject("PNG_AndNotThisFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_AndThisFilter {
+            get {
+                object obj = ResourceManager.GetObject("PNG_AndThisFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_DeleteTagIcon {
+            get {
+                object obj = ResourceManager.GetObject("PNG_DeleteTagIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_OrNotThisFilter {
+            get {
+                object obj = ResourceManager.GetObject("PNG_OrNotThisFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_OrThisFilter {
+            get {
+                object obj = ResourceManager.GetObject("PNG_OrThisFilter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PNG_RemoveTagIcon {
+            get {
+                object obj = ResourceManager.GetObject("PNG_RemoveTagIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
