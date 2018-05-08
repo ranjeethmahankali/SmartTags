@@ -24,6 +24,7 @@ namespace SmartTagsForRhino
         private Label lblCurFilterText;
         private Button btnSaveCurFilter;
         private FlowLayoutPanel pnlSavedFilters;
+        private Button btnNewTag;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -49,15 +50,17 @@ namespace SmartTagsForRhino
             this.pnlTagContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.pnlTagFilter = new System.Windows.Forms.Panel();
+            this.pnlSavedFilters = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlCurFilter = new System.Windows.Forms.Panel();
             this.btnSaveCurFilter = new System.Windows.Forms.Button();
             this.lblCurFilterText = new System.Windows.Forms.Label();
             this.lblCurrentFilter = new System.Windows.Forms.Label();
             this.pnlTitleBar = new System.Windows.Forms.Panel();
-            this.pnlSavedFilters = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnNewTag = new System.Windows.Forms.Button();
             this.pnlBody.SuspendLayout();
             this.pnlTagFilter.SuspendLayout();
             this.pnlCurFilter.SuspendLayout();
+            this.pnlTitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTagContainer
@@ -88,6 +91,14 @@ namespace SmartTagsForRhino
             this.pnlTagFilter.Name = "pnlTagFilter";
             this.pnlTagFilter.Size = new System.Drawing.Size(326, 213);
             this.pnlTagFilter.TabIndex = 3;
+            // 
+            // pnlSavedFilters
+            // 
+            this.pnlSavedFilters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSavedFilters.Location = new System.Drawing.Point(0, 85);
+            this.pnlSavedFilters.Name = "pnlSavedFilters";
+            this.pnlSavedFilters.Size = new System.Drawing.Size(326, 128);
+            this.pnlSavedFilters.TabIndex = 2;
             // 
             // pnlCurFilter
             // 
@@ -134,19 +145,22 @@ namespace SmartTagsForRhino
             // pnlTitleBar
             // 
             this.pnlTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlTitleBar.Controls.Add(this.btnNewTag);
             this.pnlTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitleBar.Location = new System.Drawing.Point(0, 0);
             this.pnlTitleBar.Name = "pnlTitleBar";
             this.pnlTitleBar.Size = new System.Drawing.Size(326, 28);
             this.pnlTitleBar.TabIndex = 0;
             // 
-            // pnlSavedFilters
+            // btnNewTag
             // 
-            this.pnlSavedFilters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlSavedFilters.Location = new System.Drawing.Point(0, 85);
-            this.pnlSavedFilters.Name = "pnlSavedFilters";
-            this.pnlSavedFilters.Size = new System.Drawing.Size(326, 128);
-            this.pnlSavedFilters.TabIndex = 2;
+            this.btnNewTag.Location = new System.Drawing.Point(5, 1);
+            this.btnNewTag.Name = "btnNewTag";
+            this.btnNewTag.Size = new System.Drawing.Size(75, 26);
+            this.btnNewTag.TabIndex = 0;
+            this.btnNewTag.Text = "New Tag";
+            this.btnNewTag.UseVisualStyleBackColor = true;
+            this.btnNewTag.Click += new System.EventHandler(this.btnNewTag_Click);
             // 
             // Panel_TagManager
             // 
@@ -160,6 +174,7 @@ namespace SmartTagsForRhino
             this.pnlTagFilter.ResumeLayout(false);
             this.pnlCurFilter.ResumeLayout(false);
             this.pnlCurFilter.PerformLayout();
+            this.pnlTitleBar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -438,6 +453,11 @@ namespace SmartTagsForRhino
         private void btnSaveCurFilter_Click(object sender, EventArgs e)
         {
             Rhino.RhinoApp.RunScript(Commands.SaveCurrentFilter.CommandString, true);
+        }
+
+        private void btnNewTag_Click(object sender, EventArgs e)
+        {
+            Rhino.RhinoApp.RunScript(Commands.TagCommand.CommandString, true);
         }
         #endregion
     }
