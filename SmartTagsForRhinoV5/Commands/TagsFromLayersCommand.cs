@@ -13,10 +13,10 @@ using System.Diagnostics;
 namespace SmartTagsForRhino.Commands
 {
     //this command deletes tags associated with the selected objects
-    [System.Runtime.InteropServices.Guid("63083f7b-f7b0-4479-9a64-a4403d66e25c")]
+    [System.Runtime.InteropServices.Guid("9366a486-7e38-4144-874c-868abb92152b")]
     public class TagsFromLayers : Command
     {
-        public static string CommandString = "DeleteTag";
+        public static string CommandString = "TagsFromLayers";
         public TagsFromLayers()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -39,6 +39,7 @@ namespace SmartTagsForRhino.Commands
             foreach (var layer in doc.Layers)
             {
                 RhinoObject[] objs = doc.Objects.FindByLayer(layer);
+                if(objs.Length == 0) { continue; }
                 TagUtil.AddTag(objs, layer.Name, true);
             }
 
