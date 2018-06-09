@@ -11,7 +11,6 @@ using SmartTagsForRhino.Core;
 
 namespace SmartTagsForRhino
 {
-    //TODO: Create your own Guid for this class
     [System.Runtime.InteropServices.Guid("01EF7393-4EF9-453D-AB70-C3E97B150195")]
     public partial class Panel_TagManager : UserControl
     {

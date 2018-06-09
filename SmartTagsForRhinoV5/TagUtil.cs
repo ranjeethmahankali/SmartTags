@@ -122,7 +122,7 @@ namespace SmartTagsForRhino
             if (updateUI) { UpdateUI(tag); }
         }
         //adds new tags with objects, or new objects to old tags
-        public static void AddTag(List<RhinoObject> objs, string tag, bool updateUI = false)
+        public static void AddTag(IEnumerable<RhinoObject> objs, string tag, bool updateUI = false)
         {
             foreach(var obj in objs) { AddTag(obj, tag); }
             if (updateUI) { UpdateUI(tag); }
