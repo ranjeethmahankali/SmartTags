@@ -113,7 +113,15 @@ namespace SmartTagsForRhino
         //adds new tags to objects, or new objects to old tags
         public static void AddTag(RhinoObject obj, string tag, bool updateUI = false)
         {
-            if (!IsValid(tag)) { return; }
+            if (!IsValid(tag))
+            {
+#if RhinoV5
+                Rhino.UI.Dialogs.ShowMessageBox("Please make sure that tag names only contain alpha numeric characters", "Tag names are invalid");
+#elif RhinoV6
+                Rhino.UI.Dialogs.ShowMessage("Please make sure that tag names only contain alpha numeric characters", "Tag names are invalid");
+#endif
+                return;
+            }
             List<string> tags = GetTags(obj);
             if (tags.Contains(tag)) { return; }
             tags.Add(tag);
