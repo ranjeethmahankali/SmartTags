@@ -111,7 +111,7 @@ namespace SmartTagsForRhino
         }
 
         //adds new tags to objects, or new objects to old tags
-        public static void AddTag(RhinoObject obj, string tag, bool updateUI = false)
+        public static bool AddTag(RhinoObject obj, string tag, bool updateUI = false)
         {
             if (!IsValid(tag))
             {
@@ -120,20 +120,30 @@ namespace SmartTagsForRhino
 #elif RhinoV6
                 Rhino.UI.Dialogs.ShowMessage("Please make sure that tag names only contain alpha numeric characters", "Tag names are invalid");
 #endif
-                return;
+                return false;
             }
             List<string> tags = GetTags(obj);
-            if (tags.Contains(tag)) { return; }
+            if (tags.Contains(tag)) { return true; }
             tags.Add(tag);
             SaveTags(obj, tags);
 
             if (updateUI) { UpdateUI(tag); }
+            return true;
         }
         //adds new tags with objects, or new objects to old tags
-        public static void AddTag(IEnumerable<RhinoObject> objs, string tag, bool updateUI = false)
+        public static bool AddTag(IEnumerable<RhinoObject> objs, string tag, bool updateUI = false)
         {
-            foreach(var obj in objs) { AddTag(obj, tag); }
-            if (updateUI) { UpdateUI(tag); }
+            bool success = true;
+            foreach(var obj in objs)
+            {
+                if(!AddTag(obj, tag, updateUI))
+                {
+                    success = false;
+                    break;
+                }
+            }
+            //if (updateUI) { UpdateUI(tag); }
+            return success;
         }
         //deletes existing tags. returns true if all goes well or else returs false
         public static void DeleteTag(RhinoObject obj, string tag, bool updateUI = false)

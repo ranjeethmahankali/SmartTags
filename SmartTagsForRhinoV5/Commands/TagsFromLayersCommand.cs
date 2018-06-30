@@ -40,7 +40,10 @@ namespace SmartTagsForRhino.Commands
             {
                 RhinoObject[] objs = doc.Objects.FindByLayer(layer);
                 if(objs.Length == 0) { continue; }
-                TagUtil.AddTag(objs, layer.Name, true);
+                if(!TagUtil.AddTag(objs, layer.Name, true))
+                {
+                    break;
+                }
             }
 
             doc.Views.Redraw();
