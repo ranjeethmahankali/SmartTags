@@ -65,7 +65,7 @@ namespace SmartTagsForRhino.Commands
             }
 
             TagUtil.AddTag(objs, tagName, true);
-
+            doc.Modified = true;
             doc.Objects.UnselectAll();
             doc.Views.Redraw();
             return Result.Success;

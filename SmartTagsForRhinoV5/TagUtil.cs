@@ -146,7 +146,7 @@ namespace SmartTagsForRhino
             return success;
         }
         //deletes existing tags. returns true if all goes well or else returs false
-        public static void DeleteTag(RhinoObject obj, string tag, bool updateUI = false)
+        public static void DeleteTag(ref RhinoObject obj, string tag, bool updateUI = false)
         {
             List<string> tags = GetTags(obj);
             if (!tags.Contains(tag)) { return; }
@@ -156,9 +156,14 @@ namespace SmartTagsForRhino
             if (updateUI) { UpdateUI(tag); }
         }
         //deletes existing tags. returns true if all goes well or else returs false
-        public static void DeleteTag(List<RhinoObject> objs, string tag, bool updateUI = false)
+        public static void DeleteTag(ref List<RhinoObject> objs, string tag, bool updateUI = false)
         {
-            foreach(var obj in objs) { DeleteTag(obj, tag); }
+            for(int i = 0; i <objs.Count; i++)
+            {
+                var obj = objs[i];
+                DeleteTag(ref obj, tag);
+                objs[i] = obj;
+            }
             if (updateUI) { UpdateUI(tag); }
         }
 

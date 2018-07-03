@@ -47,6 +47,7 @@ namespace SmartTagsForRhino.Commands
             }
 
             doc.Views.Redraw();
+            doc.Modified = true;
             return Result.Success;
         }
     }

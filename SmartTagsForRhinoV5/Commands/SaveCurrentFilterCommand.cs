@@ -71,7 +71,7 @@ namespace SmartTagsForRhino.Commands
             }
 
             TagUtil.AddSavedFiltersToDocument(doc);
-
+            doc.Modified = true;
             return Result.Success;
         }
     }

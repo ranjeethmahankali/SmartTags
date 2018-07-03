@@ -65,7 +65,9 @@ namespace SmartTagsForRhino.Commands
             }
 
             doc.Objects.UnselectAll();
-            TagUtil.DeleteTag(objs, tagName, true);
+            TagUtil.DeleteTag(ref objs, tagName, true);
+            //marking the document as dirty - i.e. modified so that it prompts the user to save when closed without saving
+            doc.Modified = true;
             return Result.Success;
         }
     }
