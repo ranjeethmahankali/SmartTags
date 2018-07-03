@@ -437,7 +437,11 @@ namespace SmartTagsForRhino
             if (tag == null) { return; }
 
             Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.TagFilterCommand.CommandString, tag), false);
-            Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.DeleteTagsCommand.CommandString, tag), true);
+            if(_selectedObjects.Count > 0)
+            {
+                Rhino.RhinoApp.RunScript(string.Format("{0} {1}", Commands.DeleteTagsCommand.CommandString, tag), true);
+            }
+            TagDict.Remove(tag);
             ResetUI();
         }
 
